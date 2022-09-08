@@ -2,9 +2,9 @@ import { black, white } from "@styles/color";
 import React from "react";
 import styled from "styled-components";
 import { BoxContent, FrontItem, Lid, MainItem, SideItem } from "./Items3D";
+import { MailBoxControlProps } from "./types";
 
-export function MailBox3D() {
-  const [open, setOpen] = React.useState<boolean>(false);
+export function MailBox3D({ rotate, topAnchor, open }: MailBoxControlProps) {
   const [contentView, setContentView] = React.useState<boolean>(false);
   const refLid = React.useRef<HTMLDivElement>(null);
 
@@ -19,17 +19,13 @@ export function MailBox3D() {
   }, []);
 
   const contentAnimationEnd = React.useCallback((state: boolean) => {
-    setOpen(state);
+    // setOpen(state);
   }, []);
 
   return (
     <>
-      <MailBox>
-        <MailBoxWrap
-          onClick={
-            contentView ? () => setContentView(false) : () => setOpen(!open)
-          }
-        >
+      <MailBox className={`${topAnchor ? "top-ahchor" : ""}`}>
+        <MailBoxWrap className={`${rotate ? "rotate" : ""}`}>
           <MainItem className="main top" />
           <MainItem className="main back" />
           <MainItem className="main bottom" />
@@ -50,9 +46,16 @@ export function MailBox3D() {
 
 const MailBox = styled.div`
   position: absolute;
-  top: 17.07px;
-  left: 54.04px;
+  top: calc(50% - 100px);
+  left: calc(50% - 150px);
+
   perspective: 1000px;
+
+  transition: 0.3s;
+  &.top-ahchor {
+    top: 17.07px;
+    left: 54.04px;
+  }
 `;
 
 const MailBoxWrap = styled.div`
@@ -63,7 +66,11 @@ const MailBoxWrap = styled.div`
   height: 200px;
 
   transform-origin: 0% 0%;
-  transform: rotateX(-10deg) rotateY(25deg);
+  transition: 0.3s;
+
+  &.rotate {
+    transform: rotateX(-10deg) rotateY(25deg);
+  }
 
   & > div {
     transform-style: preserve-3d;

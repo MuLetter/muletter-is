@@ -9,3 +9,9 @@ export interface ContentStyleProps {
 export interface ContentControlProps {
   animationEnd: (state: boolean) => void;
 }
+
+export interface MailBoxControlProps {
+  rotate: boolean;
+  topAnchor: boolean;
+  open: boolean;
+}

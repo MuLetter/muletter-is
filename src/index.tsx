@@ -3,15 +3,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import GlobalStyle from "@styles/global";
+import { RecoilRoot } from "recoil";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <Router>
+  <RecoilRoot>
     <GlobalStyle />
-    <App />
-  </Router>
+    <Router>
+      <App />
+    </Router>
+  </RecoilRoot>
 );
 
 reportWebVitals();

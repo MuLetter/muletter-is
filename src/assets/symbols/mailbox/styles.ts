@@ -10,7 +10,7 @@ export const ContentWrap = styled.div<ContentStyleProps>`
   width: calc(100% - 54.04px - (258.36px / 2));
   right: 0;
   top: 100px;
-  height: 200px;
+  height: calc(100% - 100px);
 
   transform-origin: 0 0;
   transition: 0.5s ease-out;

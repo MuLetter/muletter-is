@@ -1,10 +1,11 @@
+import { white } from "@styles/color";
 import React from "react";
 import styled, { css } from "styled-components";
 import { Back, Front, Letter, Lid } from "./Items3D";
 import { MailStyleProps } from "./types";
 
 export function Mail3D() {
-  const [rotate, setRotate] = React.useState<boolean>(false);
+  const [rotate] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState<boolean>(false);
   const [letterView, setLetterView] = React.useState<boolean>(false);
 
@@ -59,3 +60,98 @@ const MailWrap = styled.div<MailStyleProps>`
       transform: rotateY(-40deg) rotateX(25deg);
     `}
 `;
+
+export function Mail2D() {
+  return (
+    <svg
+      className="mail 2d"
+      xmlns="https://www.w3.org/2000/svg"
+      width={150}
+      height={100}
+      viewBox="0 0 150 100"
+    >
+      <path
+        d="
+        M 0 0
+        L 0 100
+        L 150 100
+        L 150 0
+        L 75 50
+        L 0 0
+        L 150 0
+        "
+        stroke={white[500]}
+        strokeWidth={2}
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+export function Mail2DOpen() {
+  return (
+    <svg
+      className="mail 2d open"
+      xmlns="https://www.w3.org/2000/svg"
+      width={150}
+      height={150}
+      viewBox="0 0 150 150"
+    >
+      <path
+        d="
+        M 0 50
+        L 0 150
+        L 150 150
+        L 150 50
+        L 75 100
+        L 0 50
+        L 75 0
+        L 150 50
+        "
+        stroke={white[500]}
+        strokeWidth={2}
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+export function Mail2DLetter() {
+  return (
+    <svg
+      className="mail 2d letter"
+      xmlns="https://www.w3.org/2000/svg"
+      width={150}
+      height={160}
+      viewBox="0 0 150 160"
+    >
+      <path
+        d="
+        M 0 60
+        L 0 160
+        L 150 160
+        L 150 60
+        L 75 110
+        L 0 60
+        L 10 50
+        M 150 60
+        L 140 50
+        "
+        stroke={white[500]}
+        strokeWidth={2}
+        fill="none"
+      />
+      <path
+        d="
+        M 10 66
+        L 10 0
+        L 140 0
+        L 140 66
+        "
+        stroke={white[500]}
+        strokeWidth={2}
+        fill="none"
+      />
+    </svg>
+  );
+}

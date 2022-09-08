@@ -1,7 +1,12 @@
-import { LetterLoading } from "@component/common";
+import { IntroPage } from "@page";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  return <LetterLoading />;
+  return (
+    <Routes>
+      <Route path="/" element={<IntroPage />} />
+    </Routes>
+  );
 }
 
 export default App;

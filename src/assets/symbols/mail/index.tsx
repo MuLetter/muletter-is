@@ -1,8 +1,9 @@
 import { white } from "@styles/color";
 import React from "react";
 import styled, { css } from "styled-components";
+import { Letter2DText } from "./Items2D";
 import { Back, Front, Letter, Lid } from "./Items3D";
-import { MailStyleProps } from "./types";
+import { Letter2DStyleProps, MailStyleProps } from "./types";
 
 export function Mail3D() {
   const [rotate] = React.useState<boolean>(false);
@@ -116,7 +117,7 @@ export function Mail2DOpen() {
   );
 }
 
-export function Mail2DLetter() {
+export function Mail2DLetter({ text }: Letter2DStyleProps) {
   return (
     <svg
       className="mail 2d letter"
@@ -152,6 +153,16 @@ export function Mail2DLetter() {
         strokeWidth={2}
         fill="none"
       />
+      {text && (
+        <Letter2DText
+          alignmentBaseline="central"
+          x={75}
+          y={40}
+          textAnchor="middle"
+        >
+          {text}
+        </Letter2DText>
+      )}
     </svg>
   );
 }

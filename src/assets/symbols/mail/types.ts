@@ -17,3 +17,7 @@ export interface LetterControlProps {
 export interface MailStyleProps {
   isRotate: boolean;
 }
+
+export interface Letter2DStyleProps {
+  text?: string;
+}

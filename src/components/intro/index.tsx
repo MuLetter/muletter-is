@@ -1,9 +1,18 @@
 import { SmallLogo } from "@asset/logo";
 import { Mail2D, Mail2DLetter, Mail2DOpen } from "@asset/symbols";
+import { Button } from "@component/common/button";
 import { Tag1 } from "@styles/font";
-import { FullScreenContainer, IntroWrap, LetterGroup } from "./styles";
+import { useNavigate } from "react-router-dom";
+import {
+  EtcGroup,
+  FullScreenContainer,
+  IntroWrap,
+  LetterGroup,
+} from "./styles";
 
 function IntroComponent() {
+  const navigate = useNavigate();
+
   return (
     <FullScreenContainer>
       <IntroWrap>
@@ -14,8 +23,21 @@ function IntroComponent() {
           <div className="center">
             <Mail2DOpen />
           </div>
-          <Mail2DLetter />
+          <Mail2DLetter text="팀 따스함" />
         </LetterGroup>
+        <EtcGroup>
+          <Tag1 className="gustoroom title">
+            GustoRoom Web Symbol Project pt3
+          </Tag1>
+          <Tag1 className="gustoroom subject">Letter MailBox</Tag1>
+          <Button
+            className="start-btn"
+            colorTheme="outline"
+            onClick={() => navigate("/step1", { replace: true })}
+          >
+            시작하기
+          </Button>
+        </EtcGroup>
       </IntroWrap>
     </FullScreenContainer>
   );

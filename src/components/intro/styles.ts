@@ -17,7 +17,7 @@ export const FullScreenContainer = styled.div`
 `;
 
 export const IntroWrap = styled.div`
-  width: 880px;
+  width: 800px;
   color: ${white[500]};
 
   & .subtitle {
@@ -40,5 +40,29 @@ export const LetterGroup = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-end;
+  }
+`;
+
+export const EtcGroup = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 40px;
+
+  margin: 12px 0 0;
+
+  & > .title {
+    width: 214.37px;
+  }
+
+  & > .subject {
+    flex: 1;
+    text-align: center;
+  }
+
+  & > .start-btn {
+    width: 150px;
   }
 `;

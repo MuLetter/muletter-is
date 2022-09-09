@@ -1,10 +1,16 @@
+import SearchBar from "@component/register/SearchBar";
 import { black, white } from "@styles/color";
 import React from "react";
 import styled from "styled-components";
 import { BoxContent, FrontItem, Lid, MainItem, SideItem } from "./Items3D";
 import { MailBoxControlProps } from "./types";
 
-export function MailBox3D({ rotate, topAnchor, open }: MailBoxControlProps) {
+export function MailBox3D({
+  children,
+  rotate,
+  topAnchor,
+  open,
+}: React.PropsWithChildren<MailBoxControlProps>) {
   const [contentView, setContentView] = React.useState<boolean>(false);
   const refLid = React.useRef<HTMLDivElement>(null);
 
@@ -39,7 +45,9 @@ export function MailBox3D({ rotate, topAnchor, open }: MailBoxControlProps) {
           />
         </MailBoxWrap>
       </MailBox>
-      <BoxContent isView={contentView} animationEnd={contentAnimationEnd} />
+      <BoxContent isView={contentView} animationEnd={contentAnimationEnd}>
+        <SearchBar />
+      </BoxContent>
     </>
   );
 }

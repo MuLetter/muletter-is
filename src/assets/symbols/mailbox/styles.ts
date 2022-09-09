@@ -31,8 +31,10 @@ export const ContentTail = styled.svg`
 `;
 export const Content = styled.div`
   flex: 1;
+  width: 100%;
   height: 100%;
   background-color: ${white[900]};
 
   border-radius: 0 8px 8px 8px;
+  padding: 32px;
 `;

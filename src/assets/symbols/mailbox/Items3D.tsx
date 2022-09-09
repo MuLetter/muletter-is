@@ -49,9 +49,10 @@ export function FrontItem() {
 }
 
 export function BoxContent({
+  children,
   isView,
   animationEnd,
-}: ContentStyleProps & ContentControlProps) {
+}: React.PropsWithChildren<ContentStyleProps & ContentControlProps>) {
   const refWrap = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -80,7 +81,7 @@ export function BoxContent({
           fill={white[900]}
         />
       </ContentTail>
-      <Content></Content>
+      <Content>{children}</Content>
     </ContentWrap>
   );
 }

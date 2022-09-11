@@ -25,27 +25,26 @@ function SearchList({ data, nextPage }: SearchListProps) {
     [selectTracks, setSelectTracks]
   );
 
-  // const throttleScroll = React.useRef<() => void>();
+  const throttleScroll = React.useRef<() => void>(
+    _.throttle(() => {
+      nextPage();
+    }, 1000)
+  );
+
   const nextFetch = React.useCallback(() => {
     const top = refWrap.current!.scrollTop;
     const height = refWrap.current!.clientHeight;
     const sHeight = refWrap.current!.scrollHeight;
 
-    if (top - 90 <= sHeight - height) {
-      console.log("실행");
-      nextPage();
+    if (top >= sHeight - height - 40) {
+      throttleScroll.current();
     }
-  }, [nextPage]);
+  }, []);
 
   React.useEffect(() => {
-    console.log(refWrap);
     if (refWrap.current) refWrap.current!.addEventListener("scroll", nextFetch);
-
-    return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      refWrap.current!.removeEventListener("scroll", nextFetch);
-    };
-  }, [nextFetch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Wrap ref={refWrap}>

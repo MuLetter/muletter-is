@@ -21,7 +21,6 @@ function Search() {
     data: searchDatas,
     refetch,
     fetchNextPage,
-    hasNextPage,
   } = useInfiniteQuery(
     ["searchTracks"],
     async ({ pageParam = 0 }) => {

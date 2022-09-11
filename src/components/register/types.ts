@@ -1,4 +1,6 @@
-import { Track } from "@api/types";
+import { ResSearch, Track } from "@api/types";
+import { FetchNextPageOptions, InfiniteData } from "@tanstack/react-query";
+import React from "react";
 
 export type SearchBarMode = "waiting" | "searching";
 
@@ -15,4 +17,12 @@ export interface SearchItemProps extends SelectItemProps {
 export interface SearchBarProps {
   mode: "waiting" | "searching";
   modeChange: () => void;
+  refInput: React.Ref<HTMLInputElement>;
+  q: string;
+  setQ: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface SearchListProps {
+  data?: InfiniteData<ResSearch>;
+  nextPage: (options?: FetchNextPageOptions) => void;
 }

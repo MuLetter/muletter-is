@@ -18,11 +18,12 @@ function Search() {
   const [q, setQ] = React.useState<string>("");
   const token = useRecoilValue(tokenState);
   const {
+    isRefetching,
     data: searchDatas,
-    refetch,
     fetchNextPage,
+    isFetchingNextPage,
   } = useInfiniteQuery(
-    ["searchTracks"],
+    ["searchTracks", q],
     async ({ pageParam = 0 }) => {
       console.log(pageParam);
       const data = await getSearch(token!, q, pageParam);
@@ -39,22 +40,25 @@ function Search() {
   );
 
   // input 정보가 변화할 때의 API 요청 이벤트를 제한
-  const debounceSearch = React.useRef<() => void>(
-    _.debounce(() => {
-      refetch();
+  const debounceSearch = React.useRef<
+    (e: React.ChangeEvent<HTMLInputElement>) => void
+  >(
+    _.debounce((e) => {
+      setQ(e.target.value);
     }, 1000)
   );
 
   const onChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setQ(e.target.value);
-      if (debounceSearch) debounceSearch.current();
+      debounceSearch.current(e);
     },
     []
   );
 
   React.useEffect(() => {
     if (mode) setQ("");
+
+    refInput.current!.value = "";
     if (mode === "searching") refInput.current!.focus();
   }, [mode]);
 
@@ -70,7 +74,12 @@ function Search() {
       {mode === "waiting" ? (
         <SelectList />
       ) : (
-        <SearchList data={searchDatas} nextPage={fetchNextPage} />
+        <SearchList
+          data={searchDatas}
+          nextPage={fetchNextPage}
+          isRefetching={isRefetching}
+          isFechingNextPage={isFetchingNextPage}
+        />
       )}
     </>
   );

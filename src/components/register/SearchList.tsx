@@ -7,7 +7,12 @@ import _ from "lodash";
 import { SearchListProps } from "./types";
 import { Track } from "@api/types";
 
-function SearchList({ data, nextPage }: SearchListProps) {
+function SearchList({
+  data,
+  nextPage,
+  isRefetching,
+  isFechingNextPage,
+}: SearchListProps) {
   const refWrap = React.useRef<HTMLDivElement>(null);
   const [selectTracks, setSelectTracks] = useRecoilState(selectTracksState);
 
@@ -30,6 +35,11 @@ function SearchList({ data, nextPage }: SearchListProps) {
       nextPage();
     }, 1000)
   );
+
+  React.useEffect(() => {
+    if (isRefetching && !isFechingNextPage)
+      refWrap.current?.scrollTo({ top: 0 });
+  }, [isRefetching, isFechingNextPage]);
 
   const nextFetch = React.useCallback(() => {
     const top = refWrap.current!.scrollTop;

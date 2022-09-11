@@ -25,4 +25,6 @@ export interface SearchBarProps {
 export interface SearchListProps {
   data?: InfiniteData<ResSearch>;
   nextPage: (options?: FetchNextPageOptions) => void;
+  isRefetching?: boolean;
+  isFechingNextPage?: boolean;
 }

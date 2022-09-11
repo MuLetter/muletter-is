@@ -15,7 +15,7 @@ function SearchBar({ mode, modeChange, refInput, q, setQ }: SearchBarProps) {
           mode === "waiting" ? "우체통에 음악을 등록해주세요." : "음악 검색"
         } `}
         disabled={mode === "waiting"}
-        value={q}
+        // value={q}
         onChange={setQ}
       />
       <IconButton onClick={modeChange} className={`mode-change-btn ${mode}`}>

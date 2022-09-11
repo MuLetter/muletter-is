@@ -1,7 +1,8 @@
+import { Button } from "@component/common/button";
 import { white } from "@styles/color";
 import React from "react";
 import styled, { css } from "styled-components";
-import { Content, ContentTail, ContentWrap } from "./styles";
+import { ButtonContentWrap, Content, ContentTail, ContentWrap } from "./styles";
 import { ContentControlProps, ContentStyleProps, LidStyleProps } from "./types";
 
 export const MainItem = styled.div``;
@@ -83,5 +84,14 @@ export function BoxContent({
       </ContentTail>
       <Content className="mailbox-content">{children}</Content>
     </ContentWrap>
+  );
+}
+
+export function ButtonContent() {
+  return (
+    <ButtonContentWrap className="mailbox-content">
+      <Button colorTheme="outline">등록하기</Button>
+      <Button colorTheme="outline">취소</Button>
+    </ButtonContentWrap>
   );
 }

@@ -1,7 +1,14 @@
 import { black, white } from "@styles/color";
 import React from "react";
 import styled from "styled-components";
-import { BoxContent, FrontItem, Lid, MainItem, SideItem } from "./Items3D";
+import {
+  BoxContent,
+  ButtonContent,
+  FrontItem,
+  Lid,
+  MainItem,
+  SideItem,
+} from "./Items3D";
 import { MailBoxControlProps } from "./types";
 
 export function MailBox3D({
@@ -42,6 +49,7 @@ export function MailBox3D({
             className={`${open ? "open" : "close"}`}
             ref={refLid}
           />
+          <ButtonContent />
         </MailBoxWrap>
       </MailBox>
       <BoxContent isView={contentView} animationEnd={contentAnimationEnd}>
@@ -59,9 +67,17 @@ const MailBox = styled.div`
   perspective: 1000px;
 
   transition: 0.3s;
+
+  & .mailbox-content {
+    opacity: 0;
+  }
   &.top-ahchor {
     top: 17.07px;
     left: 54.04px;
+
+    & .mailbox-content {
+      opacity: 1;
+    }
   }
 `;
 

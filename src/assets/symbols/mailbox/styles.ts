@@ -39,3 +39,25 @@ export const Content = styled.div`
   padding: 32px;
   box-sizing: border-box;
 `;
+
+export const ButtonContentWrap = styled.div`
+  background: transparent !important;
+  width: 100%;
+
+  position: absolute;
+
+  top: 100%;
+  left: 0;
+
+  transform: translateZ(-100px) translateY(48px);
+
+  display: flex;
+  flex-direction: column;
+  padding: 0 36px 0 0;
+
+  box-sizing: border-box;
+
+  row-gap: 10px;
+
+  transition: 0.3s;
+`;

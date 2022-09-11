@@ -7,4 +7,9 @@ export const RegisterCont = styled.div`
   height: calc(100vh - 120px);
 
   margin: 60px auto;
+
+  & .mailbox-content {
+    display: flex;
+    flex-direction: column;
+  }
 `;

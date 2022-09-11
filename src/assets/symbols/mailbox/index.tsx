@@ -1,4 +1,3 @@
-import SearchBar from "@component/register/SearchBar";
 import { black, white } from "@styles/color";
 import React from "react";
 import styled from "styled-components";
@@ -46,7 +45,7 @@ export function MailBox3D({
         </MailBoxWrap>
       </MailBox>
       <BoxContent isView={contentView} animationEnd={contentAnimationEnd}>
-        <SearchBar />
+        {children}
       </BoxContent>
     </>
   );

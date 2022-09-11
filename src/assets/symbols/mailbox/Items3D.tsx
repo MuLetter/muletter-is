@@ -69,7 +69,7 @@ export function BoxContent({
     <ContentWrap
       ref={refWrap}
       isView={isView}
-      className={`${isView ? "view" : ""}`}
+      className={` ${isView ? "view" : ""}`}
     >
       <ContentTail xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 3">
         <path
@@ -81,7 +81,7 @@ export function BoxContent({
           fill={white[900]}
         />
       </ContentTail>
-      <Content>{children}</Content>
+      <Content className="mailbox-content">{children}</Content>
     </ContentWrap>
   );
 }

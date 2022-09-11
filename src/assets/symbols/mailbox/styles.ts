@@ -37,4 +37,5 @@ export const Content = styled.div`
 
   border-radius: 0 8px 8px 8px;
   padding: 32px;
+  box-sizing: border-box;
 `;

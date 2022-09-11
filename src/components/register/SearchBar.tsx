@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { MdAdd } from "react-icons/md";
 import { fontStyles } from "@styles/font";
 import { white } from "@styles/color";
-import { SearchBarMode } from "./types";
+import { SearchBarProps } from "./types";
 import React from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getSearch } from "@api";
@@ -11,7 +11,8 @@ import { useRecoilValue } from "recoil";
 import { tokenState } from "@store/atom";
 import _ from "lodash";
 
-function SearchBar() {
+function SearchBar({ mode, modeChange }: SearchBarProps) {
+  const refInput = React.useRef<HTMLInputElement>(null);
   const [q, setQ] = React.useState<string>("");
   const token = useRecoilValue(tokenState);
   const { refetch } = useInfiniteQuery(
@@ -23,11 +24,6 @@ function SearchBar() {
     },
     { enabled: q !== "" }
   );
-  const [mode, setMode] = React.useState<SearchBarMode>("waiting");
-
-  const modeChange = React.useCallback(() => {
-    setMode((prev) => (prev === "waiting" ? "searching" : "waiting"));
-  }, []);
 
   // input 정보가 변화할 때의 API 요청 이벤트를 제한
   const debounceSearch = React.useRef<() => void>(
@@ -44,9 +40,15 @@ function SearchBar() {
     []
   );
 
+  React.useEffect(() => {
+    if (mode) setQ("");
+    if (mode === "searching") refInput.current!.focus();
+  }, [mode]);
+
   return (
     <Wrap>
       <Input
+        ref={refInput}
         type="text"
         placeholder={`${
           mode === "waiting" ? "우체통에 음악을 등록해주세요." : "음악 검색"

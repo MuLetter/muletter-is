@@ -3,10 +3,19 @@ import { P2, P4 } from "@styles/font";
 import styled from "styled-components";
 import { SearchItemProps } from "./types";
 import _ from "lodash";
+import { IconButton } from "@component/common/button";
+import { MdAdd } from "react-icons/md";
 
-function SearchItem({ track }: SearchItemProps) {
+function SearchItem({
+  track,
+  selectAction,
+  removeAction,
+  isSelect,
+}: SearchItemProps) {
   return (
-    <Wrap>
+    <Wrap
+      onClick={isSelect ? () => removeAction(track) : () => selectAction(track)}
+    >
       <AlbumArt
         src={track.album.images.length !== 0 ? track.album.images[0].url : ""}
       />
@@ -16,6 +25,9 @@ function SearchItem({ track }: SearchItemProps) {
         </P4>
         <P2 className="track-name">{track.name}</P2>
       </MusicInfo>
+      <IconButton className={`${isSelect ? "select" : ""}`}>
+        <MdAdd />
+      </IconButton>
     </Wrap>
   );
 }
@@ -30,6 +42,14 @@ const Wrap = styled.div`
   color: ${white[500]};
 
   column-gap: 12px;
+  cursor: pointer;
+
+  & button {
+    transition: 0.3s;
+  }
+  & > .select {
+    transform: rotateZ(135deg);
+  }
 `;
 
 const AlbumArt = styled.img`

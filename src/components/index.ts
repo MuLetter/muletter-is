@@ -1,3 +1,4 @@
 export * from "./intro";
 export * from "./register";
 export * from "./ready";
+export * from "./recoProcess";

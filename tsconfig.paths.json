@@ -40,6 +40,12 @@
             ],
             "@recommender/*": [
                 "./libs/Recommender/*"
+            ],
+            "@minmaxscaler": [
+                "./libs/MinMaxScaler"
+            ],
+            "@minmaxscaler/*": [
+                "./libs/MinMaxScaler/*"
             ]
         }
     }

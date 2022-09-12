@@ -1,4 +1,10 @@
-import { IntroPage, ReadyPage, RegisterPage, RootPage } from "@page";
+import {
+  IntroPage,
+  ReadyPage,
+  RecoProcessPage,
+  RegisterPage,
+  RootPage,
+} from "@page";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -8,6 +14,7 @@ function App() {
         <Route index element={<IntroPage />} />
         <Route path="/step1" element={<RegisterPage />} />
         <Route path="/step2" element={<ReadyPage />} />
+        <Route path="/step3" element={<RecoProcessPage />} />
       </Route>
     </Routes>
   );

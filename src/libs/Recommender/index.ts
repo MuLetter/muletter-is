@@ -167,6 +167,25 @@ class Recommender {
       console.error(err);
     }
   }
+
+  get mergeAudioFeatures() {
+    let mergeAudioFeatures = _.concat(
+      this.audioFeatures,
+      this.recoAudioFeatures
+    );
+
+    return _.uniqBy(mergeAudioFeatures, "id");
+  }
+
+  get processIds() {
+    return _.map(this.mergeAudioFeatures, (feature) => _.values(feature)[0]);
+  }
+
+  get processDatas() {
+    return _.map(this.mergeAudioFeatures, (feature) =>
+      _.tail(_.values(feature))
+    );
+  }
 }
 
 export default Recommender;

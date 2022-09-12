@@ -48,4 +48,6 @@ export const LetterBlock = styled.div<LetterStyleProps>`
       transform: translateY(-400px);
       height: 800px;
     `}
+
+  overflow-y: scroll;
 `;

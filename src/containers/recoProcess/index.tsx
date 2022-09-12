@@ -1,10 +1,11 @@
 import { RecoProcessComponent } from "@component";
-import { RecommenderState } from "@store/reco/atom";
+import { RecommenderState, RecoTracksState } from "@store/reco/atom";
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 export function RecoProcessContainer() {
   const [isDone, setIsDone] = React.useState<boolean>(false);
+  const setRecoTracks = useSetRecoilState(RecoTracksState);
   const [recommender, setRecommender] = useRecoilState(RecommenderState);
 
   React.useEffect(() => {
@@ -13,10 +14,13 @@ export function RecoProcessContainer() {
         const clone = recommender.clone();
         const { done } = clone.next();
         if (!done) setRecommender(clone);
-        else setIsDone(true);
-      }, 2000);
+        else {
+          setRecoTracks(clone.recoTracks);
+          setIsDone(true);
+        }
+      }, 1000);
     }
-  }, [recommender, setRecommender]);
+  }, [recommender, setRecommender, setRecoTracks]);
 
   return (
     <RecoProcessComponent

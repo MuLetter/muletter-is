@@ -98,7 +98,8 @@ export function Lid({ isOpen, animationEnd }: LidStyleProps & LidControlProps) {
 export function Letter({
   isView,
   animationEnd,
-}: LetterStyleProps & LetterControlProps) {
+  children,
+}: React.PropsWithChildren<LetterStyleProps & LetterControlProps>) {
   const refLetter = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -119,7 +120,7 @@ export function Letter({
       isView={isView}
       className={`${isView ? "view" : ""}`}
     >
-      Letter
+      {children}
     </LetterBlock>
   );
 }

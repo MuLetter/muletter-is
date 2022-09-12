@@ -1,5 +1,6 @@
 import {
   IntroPage,
+  MuLetterPage,
   ReadyPage,
   RecoProcessPage,
   RegisterPage,
@@ -15,6 +16,7 @@ function App() {
         <Route path="/step1" element={<RegisterPage />} />
         <Route path="/step2" element={<ReadyPage />} />
         <Route path="/step3" element={<RecoProcessPage />} />
+        <Route path="/step4" element={<MuLetterPage />} />
       </Route>
     </Routes>
   );

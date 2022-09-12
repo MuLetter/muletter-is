@@ -5,7 +5,9 @@ import { Letter2DText } from "./Items2D";
 import { Back, Front, Letter, Lid } from "./Items3D";
 import { Letter2DStyleProps, MailStyleProps } from "./types";
 
-export function Mail3D() {
+export function Mail3D({ children }: React.PropsWithChildren<any>) {
+  const refWrap = React.useRef<HTMLDivElement>(null);
+  const [down, setDown] = React.useState<boolean>(false);
   const [rotate] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState<boolean>(false);
   const [letterView, setLetterView] = React.useState<boolean>(false);
@@ -13,6 +15,12 @@ export function Mail3D() {
   // open 액션용
   const changeLetterView = React.useCallback((state: boolean) => {
     setLetterView(state);
+    if (refWrap.current) {
+      const { top } = refWrap.current.getBoundingClientRect();
+
+      if (top < 320) setDown(true);
+      else setDown(false);
+    }
   }, []);
 
   // close action 용
@@ -21,13 +29,15 @@ export function Mail3D() {
   }, []);
 
   return (
-    <Mail>
+    <Mail ref={refWrap} className={`${down ? "down" : ""}`}>
       <MailWrap
         isRotate={rotate}
         onClick={letterView ? () => setLetterView(false) : () => setOpen(true)}
       >
         <Back />
-        <Letter isView={letterView} animationEnd={changeLid} />
+        <Letter isView={letterView} animationEnd={changeLid}>
+          {children}
+        </Letter>
         <Front />
         <Lid isOpen={open} animationEnd={changeLetterView} />
       </MailWrap>
@@ -38,6 +48,11 @@ export function Mail3D() {
 const Mail = styled.div`
   // 단순히 3D 효과용
   perspective: 2000px;
+
+  transition: 0.8s;
+  &.down {
+    transform: translateY(320px);
+  }
 `;
 
 const MailWrap = styled.div<MailStyleProps>`

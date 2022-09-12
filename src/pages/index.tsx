@@ -9,6 +9,7 @@ export * from "./intro";
 export * from "./register";
 export * from "./ready";
 export * from "./recoProcess";
+export * from "./muletter";
 
 export function RootPage() {
   const [token, setToken] = useRecoilState(tokenState);

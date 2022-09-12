@@ -1,4 +1,4 @@
-import { getArtists, getAvailableGenres } from "@api";
+import { getArtists, getAvailableGenres, getRecommendations } from "@api";
 import { Track } from "@api/types";
 import _ from "lodash";
 import { ArtistAndGenres, Artist, ProcessAudioFeatures, Seed } from "./types";
@@ -12,6 +12,9 @@ class Recommender {
   artistAndGenres?: ArtistAndGenres[];
   audioFeatures?: ProcessAudioFeatures[];
   seeds?: Seed[];
+
+  recommendations?: Track[];
+  recoAudioFeatures?: ProcessAudioFeatures[];
 
   constructor(spotifyToken: string, tracks: Track[]) {
     this.spotifyToken = spotifyToken;
@@ -123,6 +126,46 @@ class Recommender {
         ...seedFeatures,
       };
     }) as Seed[];
+  }
+
+  async addRecommendations() {
+    let recommendations: Track[] = [];
+
+    try {
+      for (let seed of this.seeds!) {
+        const resRecommendations = await getRecommendations.call(this, seed);
+        const recos = resRecommendations.data.tracks;
+        const parsed = _.map(recos, ({ id, name, artists, album }) => ({
+          id,
+          name,
+          artists: _.map(artists, ({ id, name }) => ({
+            id,
+            name,
+          })),
+          album: {
+            images: album.images,
+          },
+        }));
+
+        recommendations = _.concat(recommendations, parsed) as Track[];
+      }
+    } catch (err) {
+      console.log(this.spotifyToken);
+      console.error(err);
+    }
+
+    this.recommendations = _.shuffle(_.uniqBy(recommendations, "id"));
+  }
+
+  async addRecoAudioFeatures() {
+    try {
+      this.recoAudioFeatures = await new FeaturesGenerator(
+        this.recommendations!
+      ).generate(this);
+    } catch (err) {
+      console.log(this.spotifyToken);
+      console.error(err);
+    }
   }
 }
 

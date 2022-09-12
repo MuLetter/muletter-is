@@ -1,3 +1,4 @@
+import { Seed } from "@recommender/types";
 import axios from "axios";
 import qs from "qs";
 import {
@@ -5,6 +6,7 @@ import {
   ResAudioFeatures,
   ResAvailableGenres,
   ResGetArtists,
+  ResGetRecommendations,
   ResGetToken,
   ResSearch,
 } from "./types";
@@ -68,6 +70,21 @@ export const getArtists = function (this: HasToken, ids: string) {
 export const getFeatures = function (this: HasToken, ids: string) {
   return axios.get<ResAudioFeatures>(
     `${APIURL}/audio-features?${qs.stringify({ ids })}`,
+    {
+      headers: {
+        authorization: `Bearer ${this.spotifyToken}`,
+      },
+    }
+  );
+};
+
+export const getRecommendations = function (this: HasToken, seed: Seed) {
+  return axios.get<ResGetRecommendations>(
+    `${APIURL}/recommendations?${qs.stringify({
+      ...seed,
+      market: "KR",
+      limit: 100,
+    })}`,
     {
       headers: {
         authorization: `Bearer ${this.spotifyToken}`,

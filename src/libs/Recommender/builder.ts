@@ -16,6 +16,12 @@ class RecommenderBuilder {
     await this.recommender.addAudioFeatures();
     this.recommender.addSeeds();
   }
+
+  // step 2. Spotify 로부터 추천 음악들을 받아오는 과정
+  async step2() {
+    await this.recommender.addRecommendations();
+    await this.recommender.addRecoAudioFeatures();
+  }
 }
 
 export default RecommenderBuilder;

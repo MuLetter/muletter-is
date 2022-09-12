@@ -24,6 +24,10 @@ export type ResAudioFeatures = {
   audio_features: AudioFeature[];
 };
 
+export type ResGetRecommendations = {
+  tracks: Track[];
+};
+
 export interface AudioFeature {
   [key: string]: number | string;
 

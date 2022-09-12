@@ -1,12 +1,14 @@
 import { getArtists, getAvailableGenres, getRecommendations } from "@api";
 import { Track } from "@api/types";
+import KMeans from "@kmeans";
+import MinMaxScaler from "@minmaxscaler";
 import _ from "lodash";
 import { ArtistAndGenres, Artist, ProcessAudioFeatures, Seed } from "./types";
-import { FeaturesGenerator } from "./utils";
+import { dropTrackByLabelCount, FeaturesGenerator } from "./utils";
 
 class Recommender {
   tracks: Track[];
-  spotifyToken?: string;
+  spotifyToken: string;
 
   availableGenres?: string[];
   artistAndGenres?: ArtistAndGenres[];
@@ -16,9 +18,44 @@ class Recommender {
   recommendations?: Track[];
   recoAudioFeatures?: ProcessAudioFeatures[];
 
+  // run processing
+  kmeans?: KMeans;
+  recoIdsAndLabels?: (string | number | undefined)[][];
+  recoTracks: Track[];
+
+  MIN_LENGTH: number = 80;
+  MAX_LENGTH: number = 100;
+
   constructor(spotifyToken: string, tracks: Track[]) {
     this.spotifyToken = spotifyToken;
     this.tracks = tracks;
+
+    this.recoTracks = [];
+  }
+
+  clone() {
+    const recommender = new Recommender(this.spotifyToken, this.tracks);
+
+    recommender.availableGenres = this.availableGenres;
+    recommender.artistAndGenres = this.artistAndGenres;
+    recommender.audioFeatures = this.audioFeatures;
+    recommender.seeds = this.seeds;
+    recommender.recommendations = this.recommendations;
+    recommender.recoAudioFeatures = this.recoAudioFeatures;
+    recommender.recoTracks = this.recoTracks;
+
+    return recommender;
+  }
+
+  next() {
+    this.run();
+    if (
+      this.recoTracks.length <= this.MAX_LENGTH &&
+      this.recoTracks.length >= this.MIN_LENGTH
+    ) {
+      this.recoTracks = _.shuffle(this.recoTracks);
+      return { value: this.recoTracks.length, done: true };
+    } else return { value: this.recoTracks.length, done: false };
   }
 
   async addAvailableGenres() {
@@ -186,6 +223,95 @@ class Recommender {
       _.tail(_.values(feature))
     );
   }
+
+  runKMeans = () => {
+    // 1. min-max scaling
+    const scaler = new MinMaxScaler(this.processDatas as number[][]);
+    const datas = scaler.fit().transfrom();
+
+    // 2. KMeans Run
+    const kmeans = new KMeans(datas);
+    kmeans.setCentroids(2);
+    do {
+      kmeans.next();
+    } while (!kmeans.done);
+
+    this.kmeans = kmeans;
+  };
+
+  getRecoIdsAndLabels = (recoTracks?: Track[]) => {
+    if (recoTracks) {
+      let recoIdsAndLabels = _.map(recoTracks, ({ id, label }) => [id, label]);
+      recoIdsAndLabels = _.unzip(recoIdsAndLabels);
+      return recoIdsAndLabels;
+    } else {
+      const userIds = _.uniq(_.map(this.tracks, ({ id }) => id));
+      const trackIdAndLabels = _.zip(this.processIds, this.kmeans!.labels);
+      let userIdsAndLabels = _.filter(trackIdAndLabels, ([id]) =>
+        _.includes(userIds, id)
+      );
+      let userLabels = _.uniq(_.unzip(userIdsAndLabels)[1]);
+
+      let recoIdsAndLabels = _.filter(
+        trackIdAndLabels,
+        ([id, label]) =>
+          !_.includes(userIds, id) && _.includes(userLabels, label)
+      );
+      recoIdsAndLabels = _.unzip(recoIdsAndLabels);
+
+      return recoIdsAndLabels;
+    }
+  };
+
+  labelParsing = () => {
+    const [recoIds] = this.getRecoIdsAndLabels();
+
+    console.log("reco tracks", this.recoTracks.length, this.recoTracks);
+    console.log(
+      "recommendations",
+      this.recommendations?.length,
+      this.recommendations
+    );
+    console.log("recoIds", recoIds);
+
+    let recoTracks = _.filter(this.recommendations, ({ id }) =>
+      recoIds.includes(id)
+    );
+    return recoTracks;
+  };
+
+  save = (recoTracks: Track[]) => {
+    this.recoTracks = _.concat(this.recoTracks, recoTracks);
+    const recoIds = _.map(recoTracks, ({ id }) => id) as string[];
+    this.recommendations = _.filter(
+      this.recommendations,
+      ({ id }) => !recoIds.includes(id)
+    );
+    this.recoAudioFeatures = _.filter(
+      this.recoAudioFeatures,
+      ({ id }) => !recoIds.includes(id)
+    );
+  };
+
+  run = () => {
+    this.runKMeans();
+    let recoTracks = this.labelParsing();
+
+    // 수량 조정 - 제거
+    let recoIdsAndLabels = this.getRecoIdsAndLabels();
+    while (this.recoTracks.length + recoTracks.length > this.MAX_LENGTH) {
+      recoTracks = dropTrackByLabelCount(
+        recoTracks,
+        this.recoAudioFeatures!,
+        _.zip.apply(null, recoIdsAndLabels) as any
+      );
+      // console.log(recoTracks.length);
+      recoIdsAndLabels = this.getRecoIdsAndLabels(recoTracks);
+    }
+
+    // 수량 조정 - 제거
+    this.save(recoTracks);
+  };
 }
 
 export default Recommender;

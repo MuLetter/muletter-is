@@ -17,8 +17,9 @@ export function RecoProcessComponent({ processDatas }: ComponentProps) {
           xmlns="https://www.w3.org/2000/svg"
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         >
-          {scaler.transfrom().map((data) => (
+          {scaler.transfrom().map((data, idx) => (
             <path
+              key={`process-data-${idx}`}
               d={[
                 "M",
                 0,
@@ -47,7 +48,7 @@ export function RecoProcessComponent({ processDatas }: ComponentProps) {
               ].join(" ")}
               fill="none"
               stroke={white[900]}
-              strokeWidth={0.5}
+              strokeWidth={1}
             />
           ))}
         </FeaturesWrap>

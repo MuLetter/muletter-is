@@ -46,6 +46,12 @@
             ],
             "@minmaxscaler/*": [
                 "./libs/MinMaxScaler/*"
+            ],
+            "@kmeans": [
+                "./libs/KMeans"
+            ],
+            "@kmeans/*": [
+                "./libs/KMeans/*"
             ]
         }
     }

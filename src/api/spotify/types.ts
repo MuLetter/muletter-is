@@ -79,6 +79,7 @@ export interface Track {
   track_number: number;
   type: string;
   uri: string;
+  label?: number;
 }
 
 export interface Artist {

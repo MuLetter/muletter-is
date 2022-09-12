@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 
 export * from "./intro";
 export * from "./register";
+export * from "./ready";
 
 export function RootPage() {
   const [token, setToken] = useRecoilState(tokenState);

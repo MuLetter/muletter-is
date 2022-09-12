@@ -1,4 +1,4 @@
-import RegisterContainer from "@container/register";
+import { RegisterContainer } from "@container";
 
 export function RegisterPage() {
   return <RegisterContainer />;

@@ -11,7 +11,7 @@ import {
   LetterGroup,
 } from "./styles";
 
-function IntroComponent() {
+export function IntroComponent() {
   const navigate = useNavigate();
 
   return (
@@ -47,5 +47,3 @@ function IntroComponent() {
     </FullScreenContainer>
   );
 }
-
-export default IntroComponent;

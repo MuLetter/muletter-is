@@ -16,8 +16,10 @@ export function MailBox3D({
   rotate,
   topAnchor,
   open,
+  button,
+  content,
+  setContentView,
 }: React.PropsWithChildren<MailBoxControlProps>) {
-  const [contentView, setContentView] = React.useState<boolean>(false);
   const refLid = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -25,14 +27,11 @@ export function MailBox3D({
       refLid.current.addEventListener("transitionend", (e) => {
         if (e.propertyName === "transform") {
           if (refLid.current!.classList.contains("open")) setContentView(true);
+          else setContentView(false);
         }
       });
     }
-  }, []);
-
-  const contentAnimationEnd = React.useCallback((state: boolean) => {
-    // setOpen(state);
-  }, []);
+  }, [setContentView]);
 
   return (
     <>
@@ -49,12 +48,10 @@ export function MailBox3D({
             className={`${open ? "open" : "close"}`}
             ref={refLid}
           />
-          <ButtonContent />
+          {button && <ButtonContent {...button} />}
         </MailBoxWrap>
       </MailBox>
-      <BoxContent isView={contentView} animationEnd={contentAnimationEnd}>
-        {children}
-      </BoxContent>
+      <BoxContent isView={content}>{children}</BoxContent>
     </>
   );
 }

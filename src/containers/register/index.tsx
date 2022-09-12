@@ -1,12 +1,10 @@
-import RegisterComponent from "@component/register";
+import { RegisterComponent } from "@component";
 import Search from "./Search";
 
-function RegisterContainer() {
+export function RegisterContainer() {
   return (
     <RegisterComponent>
       <Search />
     </RegisterComponent>
   );
 }
-
-export default RegisterContainer;

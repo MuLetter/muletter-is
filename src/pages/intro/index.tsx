@@ -1,4 +1,4 @@
-import IntroComponent from "@component/intro";
+import { IntroComponent } from "@component";
 
 export function IntroPage() {
   return <IntroComponent />;

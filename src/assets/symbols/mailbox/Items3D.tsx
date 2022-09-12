@@ -3,7 +3,12 @@ import { white } from "@styles/color";
 import React from "react";
 import styled, { css } from "styled-components";
 import { ButtonContentWrap, Content, ContentTail, ContentWrap } from "./styles";
-import { ContentControlProps, ContentStyleProps, LidStyleProps } from "./types";
+import {
+  ButtonContentProps,
+  ContentControlProps,
+  ContentStyleProps,
+  LidStyleProps,
+} from "./types";
 
 export const MainItem = styled.div``;
 export const SideItem = styled.div``;
@@ -52,25 +57,13 @@ export function FrontItem() {
 export function BoxContent({
   children,
   isView,
-  animationEnd,
 }: React.PropsWithChildren<ContentStyleProps & ContentControlProps>) {
   const refWrap = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    if (refWrap.current) {
-      refWrap.current.addEventListener("transitionend", (e) => {
-        if (e.propertyName === "transform") {
-          animationEnd(refWrap.current!.classList.contains("view"));
-        }
-      });
-    }
-  }, [animationEnd]);
-
   return (
     <ContentWrap
       ref={refWrap}
       isView={isView}
-      className={` ${isView ? "view" : ""}`}
+      className={`${isView ? "view" : ""}`}
     >
       <ContentTail xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 3">
         <path
@@ -87,11 +80,18 @@ export function BoxContent({
   );
 }
 
-export function ButtonContent() {
+export function ButtonContent({ buttons }: ButtonContentProps) {
   return (
     <ButtonContentWrap className="mailbox-content">
-      <Button colorTheme="outline">등록하기</Button>
-      <Button colorTheme="outline">취소</Button>
+      {buttons.map(({ title, clickAction }) => (
+        <Button
+          colorTheme="outline"
+          onClick={clickAction}
+          key={`button-${title}`}
+        >
+          {title}
+        </Button>
+      ))}
     </ButtonContentWrap>
   );
 }

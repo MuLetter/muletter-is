@@ -1,16 +1,29 @@
 import { OpacityAnimationCont } from "@styles/block";
-import { FeaturesWrap, Wrap } from "./styles";
+import { AlertWrap, FeaturesWrap, Wrap } from "./styles";
 import { ComponentProps } from "./types";
 import MinMaxScaler from "@minmaxscaler";
 import { white } from "@styles/color";
+import { LetterAlert } from "@component/common/alert";
+import { Button } from "@component/common/button";
+import { useNavigate } from "react-router-dom";
 
 const WIDTH = 800;
 const HEIGHT = 400;
 
-export function RecoProcessComponent({ processDatas }: ComponentProps) {
+export function RecoProcessComponent({ processDatas, isDone }: ComponentProps) {
   const scaler = new MinMaxScaler(processDatas).fit();
+  const navigate = useNavigate();
 
-  return (
+  return isDone ? (
+    <OpacityAnimationCont>
+      <AlertWrap>
+        <LetterAlert />
+        <Button colorTheme="outline" onClick={() => navigate("/step4")}>
+          확인하기
+        </Button>
+      </AlertWrap>
+    </OpacityAnimationCont>
+  ) : (
     <OpacityAnimationCont>
       <Wrap>
         <FeaturesWrap

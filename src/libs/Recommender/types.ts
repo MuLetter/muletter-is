@@ -32,3 +32,18 @@ export type ProcessAudioFeatures = {
   valence: number;
   tempo: number;
 };
+
+export type Seed = {
+  [key: string]: string | number;
+  seed_tracks: string;
+  seed_artists: string;
+  seed_genres: string;
+  target_danceability: number;
+  target_energy: number;
+  target_loudness: number;
+  target_speechiness: number;
+  target_acousticness: number;
+  target_liveness: number;
+  target_valence: number;
+  target_tempo: number;
+};

@@ -14,6 +14,7 @@ class RecommenderBuilder {
     await this.recommender.addAvailableGenres();
     await this.recommender.addArtistAndGenres();
     await this.recommender.addAudioFeatures();
+    this.recommender.addSeeds();
   }
 }
 

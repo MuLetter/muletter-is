@@ -18,6 +18,7 @@ export function ReadyContainer() {
     console.log(recommender.availableGenres);
     console.log(recommender.artistAndGenres);
     console.log(recommender.audioFeatures);
+    console.log(recommender.seeds);
   }, [token, selectedTracks]);
 
   React.useEffect(() => {

@@ -1,15 +1,17 @@
 import { getArtists, getAvailableGenres } from "@api";
 import { Track } from "@api/types";
 import _ from "lodash";
-import { ArtistAndGenres, Artist, ProcessAudioFeatures } from "./types";
+import { ArtistAndGenres, Artist, ProcessAudioFeatures, Seed } from "./types";
 import { FeaturesGenerator } from "./utils";
 
 class Recommender {
   tracks: Track[];
   spotifyToken?: string;
+
   availableGenres?: string[];
   artistAndGenres?: ArtistAndGenres[];
   audioFeatures?: ProcessAudioFeatures[];
+  seeds?: Seed[];
 
   constructor(spotifyToken: string, tracks: Track[]) {
     this.spotifyToken = spotifyToken;
@@ -74,6 +76,53 @@ class Recommender {
       console.log(this.spotifyToken);
       console.error(err);
     }
+  }
+
+  addSeeds() {
+    const tracks = this.tracks;
+    const artists = this.artistAndGenres;
+    const features = this.audioFeatures;
+
+    this.seeds = _.map(tracks, ({ id: trackId, artists: _artists }) => {
+      const artistIds = _.map(_artists, ({ id }) => id);
+      let genres = _.uniq(
+        _.flatten(
+          _.map(
+            artistIds,
+            (artistId) => _.find(artists, ({ id }) => id === artistId)?.genres
+          )
+        )
+      );
+      const feature = _.find(features, ({ id }) => id === trackId);
+
+      // max 5 check
+      if (1 + artistIds.length + genres.length > 5) {
+        // track, artist 수량에 집중, 장르는 서브템으로
+        const availableGenreSize = 5 - (1 + artistIds.length);
+        genres = _.sampleSize(genres, availableGenreSize);
+      }
+      const seedArtists = _.join(artistIds, ",");
+      const seedGenres = _.join(genres, ",");
+
+      const seedFeatures = _.reduce(
+        Object.keys(feature!),
+        (acc, cur) =>
+          cur === "id"
+            ? acc
+            : {
+                ...acc,
+                [`target_${cur}`]: feature![cur],
+              },
+        {}
+      );
+
+      return {
+        seed_tracks: trackId,
+        seed_artists: seedArtists,
+        seed_genres: seedGenres,
+        ...seedFeatures,
+      };
+    }) as Seed[];
   }
 }
 

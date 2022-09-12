@@ -31,3 +31,17 @@ export function OpacityAnimationCont({
   }, [animationEnd]);
   return <OpacityAnimation ref={refWrap}>{children}</OpacityAnimation>;
 }
+
+export const BounceAni = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  } to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
+
+export const BounceAnimationCont = styled.div`
+  animation: ${BounceAni} 0.5s linear forwards;
+`;

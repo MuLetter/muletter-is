@@ -14,7 +14,13 @@ function SearchItem({
 }: SearchItemProps) {
   return (
     <Wrap
-      onClick={isSelect ? () => removeAction(track) : () => selectAction(track)}
+      onClick={
+        isSelect
+          ? () => removeAction(track)
+          : selectAction
+          ? () => selectAction(track)
+          : selectAction
+      }
     >
       <AlbumArt
         src={track.album.images.length !== 0 ? track.album.images[0].url : ""}

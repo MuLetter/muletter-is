@@ -2,10 +2,13 @@ import { ReadyComponent } from "@component";
 import RecommenderBuilder from "@recommender/builder";
 import { tokenState } from "@store/atom";
 import { selectTracksState } from "@store/mailbox/atom";
+import { RecommenderState } from "@store/reco/atom";
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export function ReadyContainer() {
+  const [recommender, setRecommender] = useRecoilState(RecommenderState);
+
   const token = useRecoilValue(tokenState);
   const selectedTracks = useRecoilValue(selectTracksState);
 
@@ -23,13 +26,13 @@ export function ReadyContainer() {
     await builder.step2();
     console.log(recommender.recommendations);
     console.log(recommender.recoAudioFeatures);
-  }, [token, selectedTracks]);
+
+    setRecommender(recommender);
+  }, [token, selectedTracks, setRecommender]);
 
   React.useEffect(() => {
-    if (token && selectedTracks.length !== 0) {
-      setting();
-    }
-  }, [setting, token, selectedTracks]);
+    if (token && selectedTracks.length !== 0 && !recommender) setting();
+  }, [setting, token, selectedTracks, recommender]);
 
-  return <ReadyComponent />;
+  return <ReadyComponent recommender={recommender} />;
 }

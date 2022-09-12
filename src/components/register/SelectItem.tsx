@@ -6,7 +6,7 @@ import { white } from "@styles/color";
 
 function SelectItem({ track, selectAction }: SelectItemProps) {
   return (
-    <Wrap onClick={() => selectAction(track)}>
+    <Wrap onClick={selectAction ? () => selectAction(track) : selectAction}>
       <AlbumArt src={track.album.images[0].url} />
       <TitleBlock className="title-block">
         <Tag1 className="artists-names">
@@ -33,7 +33,8 @@ const Wrap = styled.div`
     & > .title-block {
       height: 100%;
 
-      & > .track-title {
+      & > .artists-names,
+      .track-title {
         white-space: pre-wrap;
         overflow-x: unset;
         text-overflow: unset;
@@ -75,10 +76,8 @@ const TitleBlock = styled.div`
 
   transition: 0.3s;
 
-  & > .artists-names {
-  }
-
-  & > .track-title {
+  & > .artists-names,
+  .track-title {
     width: 100%;
     white-space: nowrap;
     overflow-x: hidden;

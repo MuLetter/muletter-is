@@ -20,7 +20,9 @@ export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
       setRotate(false);
 
       setTimeout(() => {
-        navigate("/step2");
+        navigate("/step2", {
+          replace: true,
+        });
       }, 1000);
     }, 750);
   }, [navigate]);

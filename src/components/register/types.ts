@@ -6,7 +6,7 @@ export type SearchBarMode = "waiting" | "searching";
 
 export interface SelectItemProps {
   track: Track;
-  selectAction: (...args: any) => void;
+  selectAction?: (...args: any) => void;
 }
 
 export interface SearchItemProps extends SelectItemProps {

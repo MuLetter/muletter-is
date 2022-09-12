@@ -16,6 +16,10 @@ export type ResAvailableGenres = {
   genres: string[];
 };
 
+export interface ResGetArtists {
+  artists: Artist[];
+}
+
 export type ResAudioFeatures = {
   audio_features: AudioFeature[];
 };
@@ -73,9 +77,27 @@ export interface Track {
   uri: string;
 }
 
+export interface Artist {
+  external_urls: ExternalUrls;
+  followers: Followers;
+  genres: string[];
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  popularity: number;
+  type: string;
+  uri: string;
+}
+
+export interface Followers {
+  href: any;
+  total: number;
+}
+
 export interface Album {
   album_type: string;
-  artists: Artist[];
+  artists: Artist1[];
   external_urls: ExternalUrls2;
   href: string;
   id: string;
@@ -88,7 +110,7 @@ export interface Album {
   uri: string;
 }
 
-export interface Artist {
+export interface Artist1 {
   external_urls: ExternalUrls;
   href: string;
   id: string;

@@ -1,3 +1,5 @@
+import { ReadyContainer } from "@container";
+
 export function ReadyPage() {
-  return <></>;
+  return <ReadyContainer />;
 }

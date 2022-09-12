@@ -1,3 +1,5 @@
+import { ReadyComponent } from "@component";
+
 export function ReadyContainer() {
-  return <></>;
+  return <ReadyComponent />;
 }

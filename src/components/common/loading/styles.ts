@@ -12,7 +12,20 @@ export const AniLetterLine = keyframes`
         stroke-dashoffset: -671.1620483398438;
     }
 `;
-export const LoadingWrap = styled.div`
+
+export const AniMailBoxLine = keyframes`
+    0% {
+      stroke-dashoffset: 1652.7779541015625;
+    } 40% {
+      stroke-dashoffset: 0;
+    } 80% {
+      stroke-dashoffset: -1652.7779541015625;
+    } 100% {
+      stroke-dashoffset: -1652.7779541015625;
+    }
+`;
+
+export const LetterLoadingWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,5 +45,12 @@ export const LoadingWrap = styled.div`
   & path {
     stroke-dasharray: 671.1620483398438;
     animation: ${AniLetterLine} 2s linear infinite;
+  }
+`;
+
+export const MailBoxLoadingWrap = styled.svg`
+  & path {
+    stroke-dasharray: 1652.7779541015625;
+    animation: ${AniMailBoxLine} 3.5s linear infinite;
   }
 `;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { ResGetToken, ResSearch } from "./types";
+import { HasToken, ResAvailableGenres, ResGetToken, ResSearch } from "./types";
 
 const AUTHURL = process.env.REACT_APP_SPOTIFY_AUTH_URL;
 const APIURL = process.env.REACT_APP_SPOTIFY_API_URL;
@@ -39,3 +39,10 @@ export const getSearch = async (token: string, q: string, page: number) =>
       }
     )
   ).data;
+
+export const getAvailableGenres = function (this: HasToken) {
+  return axios.get<ResAvailableGenres>(
+    `${APIURL}/recommendations/available-genre-seeds`,
+    { headers: { authorization: `Bearer ${this.spotifyToken}` } }
+  );
+};

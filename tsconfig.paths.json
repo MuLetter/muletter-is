@@ -34,6 +34,12 @@
             ],
             "@api/*": [
                 "./api/*"
+            ],
+            "@recommender": [
+                "./libs/Recommender"
+            ],
+            "@recommender/*": [
+                "./libs/Recommender/*"
             ]
         }
     }

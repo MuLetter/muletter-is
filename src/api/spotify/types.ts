@@ -1,3 +1,7 @@
+export type HasToken = {
+  spotifyToken?: string;
+};
+
 export type ResGetToken = {
   access_token: string;
   token_type: string;
@@ -6,6 +10,37 @@ export type ResGetToken = {
 
 export interface ResSearch {
   tracks: Tracks;
+}
+
+export type ResAvailableGenres = {
+  genres: string[];
+};
+
+export type ResAudioFeatures = {
+  audio_features: AudioFeature[];
+};
+
+export interface AudioFeature {
+  [key: string]: number | string;
+
+  danceability: number;
+  energy: number;
+  key: number;
+  loudness: number;
+  mode: number;
+  speechiness: number;
+  acousticness: number;
+  instrumentalness: number;
+  liveness: number;
+  valence: number;
+  tempo: number;
+  type: string;
+  id: string;
+  uri: string;
+  track_href: string;
+  analysis_url: string;
+  duration_ms: number;
+  time_signature: number;
 }
 
 export interface Tracks {

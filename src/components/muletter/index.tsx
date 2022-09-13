@@ -12,12 +12,20 @@ import { MuLetterComponentProps } from "./types";
 import _ from "lodash";
 import { BsYoutube } from "react-icons/bs";
 import { IconButton } from "@component/common/button";
+import React from "react";
 
 export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
-  console.log(recoTracks);
+  const [open, setOpen] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setOpen(true);
+    }, 500);
+  }, []);
+
   return (
     <Wrap>
-      <Mail3D>
+      <Mail3D isOpen={open}>
         <RecoListWrap>
           {recoTracks?.map((track) => (
             <RecoItem key={track.id}>

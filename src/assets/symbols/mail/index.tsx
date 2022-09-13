@@ -3,13 +3,15 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { Letter2DText } from "./Items2D";
 import { Back, Front, Letter, Lid } from "./Items3D";
-import { Letter2DStyleProps, MailStyleProps } from "./types";
+import { Letter2DStyleProps, MailControlProps, MailStyleProps } from "./types";
 
-export function Mail3D({ children }: React.PropsWithChildren<any>) {
+export function Mail3D({
+  children,
+  isOpen,
+}: React.PropsWithChildren<MailControlProps>) {
   const refWrap = React.useRef<HTMLDivElement>(null);
   const [down, setDown] = React.useState<boolean>(false);
   const [rotate] = React.useState<boolean>(false);
-  const [open, setOpen] = React.useState<boolean>(false);
   const [letterView, setLetterView] = React.useState<boolean>(false);
 
   // open 액션용
@@ -25,21 +27,21 @@ export function Mail3D({ children }: React.PropsWithChildren<any>) {
 
   // close action 용
   const changeLid = React.useCallback((state: boolean) => {
-    setOpen(state);
+    // setOpen(state);
   }, []);
 
   return (
     <Mail ref={refWrap} className={`${down ? "down" : ""}`}>
       <MailWrap
         isRotate={rotate}
-        onClick={letterView ? () => setLetterView(false) : () => setOpen(true)}
+        // onClick={letterView ? () => setLetterView(false) : () => setOpen(true)}
       >
         <Back />
         <Letter isView={letterView} animationEnd={changeLid}>
           {children}
         </Letter>
         <Front />
-        <Lid isOpen={open} animationEnd={changeLetterView} />
+        <Lid isOpen={isOpen} animationEnd={changeLetterView} />
       </MailWrap>
     </Mail>
   );

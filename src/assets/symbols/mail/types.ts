@@ -21,3 +21,7 @@ export interface MailStyleProps {
 export interface Letter2DStyleProps {
   text?: string;
 }
+
+export interface MailControlProps {
+  isOpen: boolean;
+}

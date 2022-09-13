@@ -14,12 +14,13 @@ import { BsYoutube } from "react-icons/bs";
 import { IconButton } from "@component/common/button";
 
 export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
+  console.log(recoTracks);
   return (
     <Wrap>
       <Mail3D>
         <RecoListWrap>
           {recoTracks?.map((track) => (
-            <RecoItem>
+            <RecoItem key={track.id}>
               <AlbumArt
                 src={
                   track.album.images.length !== 0
@@ -37,9 +38,18 @@ export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
                 <P2>{track.name}</P2>
               </TitleWrap>
               <IconGroup>
-                <IconButton>
-                  <BsYoutube />
-                </IconButton>
+                <a
+                  href={`https://www.youtube.com/results?search_query=${_.join(
+                    _.map(track.artists, ({ name }) => name),
+                    " ,"
+                  )} ${track.name}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <IconButton>
+                    <BsYoutube />
+                  </IconButton>
+                </a>
               </IconGroup>
             </RecoItem>
           ))}

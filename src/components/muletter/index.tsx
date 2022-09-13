@@ -31,7 +31,7 @@ export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
                 <P4>
                   {_.join(
                     _.map(track.artists, ({ name }) => name),
-                    ","
+                    " ,"
                   )}
                 </P4>
                 <P2>{track.name}</P2>

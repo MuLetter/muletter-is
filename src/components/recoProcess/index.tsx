@@ -6,6 +6,7 @@ import { white } from "@styles/color";
 import { LetterAlert } from "@component/common/alert";
 import { Button } from "@component/common/button";
 import { useNavigate } from "react-router-dom";
+import { LogoLoading } from "@component/common";
 
 const WIDTH = 800;
 const HEIGHT = 400;
@@ -25,6 +26,7 @@ export function RecoProcessComponent({ processDatas, isDone }: ComponentProps) {
     </OpacityAnimationCont>
   ) : (
     <OpacityAnimationCont>
+      <LogoLoading />
       <Wrap>
         <FeaturesWrap
           xmlns="https://www.w3.org/2000/svg"

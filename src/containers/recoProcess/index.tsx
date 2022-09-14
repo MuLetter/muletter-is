@@ -18,7 +18,7 @@ export function RecoProcessContainer() {
           setRecoTracks(clone.recoTracks);
           setIsDone(true);
         }
-      }, 1000);
+      }, 3000);
     }
   }, [recommender, setRecommender, setRecoTracks]);
 

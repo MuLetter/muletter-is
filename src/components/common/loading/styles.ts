@@ -62,7 +62,7 @@ export const LogoLoadingWrap = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background: ${black[700]};
+  background: ${white[900]};
 
   display: flex;
   justify-content: center;
@@ -71,7 +71,7 @@ export const LogoLoadingWrap = styled.div`
   z-index: 255;
 `;
 
-export const AniLogoLoading = keyframes`
+export const AniStrokeLogoLoading = keyframes`
   0% {
     stroke-dashoffset: 835.4067993164062;
     /* opacity: 0; */
@@ -83,14 +83,27 @@ export const AniLogoLoading = keyframes`
   }
 `;
 
+export const AniFillLogoLoading = keyframes`
+  0% {
+    opacity: 0;
+  } 100% {
+    opacity: 1;
+  }
+`;
+
 export const LogoLoadingSVG = styled.svg`
   width: calc(147px * 2);
   height: calc(27px * 2);
 
-  & > path {
-    stroke: ${white[500]};
+  & > .stroke {
+    /* stroke: ${white[500]}; */
 
     stroke-dasharray: 835.4067993164062;
-    animation: ${AniLogoLoading} 2s linear infinite alternate;
+    animation: ${AniStrokeLogoLoading} 2s linear infinite alternate;
+  }
+
+  & > .fill {
+    /* fill: ${white[500]}; */
+    animation: ${AniFillLogoLoading} 2s linear infinite alternate;
   }
 `;

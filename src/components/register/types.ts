@@ -28,3 +28,8 @@ export interface SearchListProps {
   isRefetching?: boolean;
   isFechingNextPage?: boolean;
 }
+
+export interface SearchItemStyleProps {
+  isLoad: boolean;
+  loadDuration: number;
+}

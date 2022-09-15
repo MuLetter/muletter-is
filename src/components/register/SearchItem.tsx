@@ -1,10 +1,11 @@
 import { white } from "@styles/color";
 import { P2, P4 } from "@styles/font";
-import styled from "styled-components";
-import { SearchItemProps } from "./types";
+import styled, { css } from "styled-components";
+import { SearchItemProps, SearchItemStyleProps } from "./types";
 import _ from "lodash";
 import { IconButton } from "@component/common/button";
 import { MdAdd } from "react-icons/md";
+import React from "react";
 
 function SearchItem({
   track,
@@ -12,8 +13,21 @@ function SearchItem({
   removeAction,
   isSelect,
 }: SearchItemProps) {
+  const [isLoad, setIsLoad] = React.useState<boolean>(false);
+  const refAlbumArt = React.useRef<HTMLImageElement>(null);
+
+  React.useEffect(() => {
+    if (refAlbumArt.current) {
+      refAlbumArt.current.addEventListener("load", () => {
+        setIsLoad(refAlbumArt.current!.complete);
+      });
+    }
+  }, []);
+
   return (
     <Wrap
+      loadDuration={Math.random() * (0.4 - 0.2) + 0.2}
+      isLoad={isLoad}
       onClick={
         isSelect
           ? () => removeAction(track)
@@ -23,6 +37,7 @@ function SearchItem({
       }
     >
       <AlbumArt
+        ref={refAlbumArt}
         src={track.album.images.length !== 0 ? track.album.images[0].url : ""}
       />
       <MusicInfo>
@@ -38,7 +53,7 @@ function SearchItem({
   );
 }
 
-const Wrap = styled.div`
+const Wrap = styled.div<SearchItemStyleProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -46,9 +61,11 @@ const Wrap = styled.div`
   padding: 0 64px;
 
   color: ${white[500]};
+  border-radius: 12px;
 
   column-gap: 12px;
   cursor: pointer;
+  transition: ${({ loadDuration }) => loadDuration}s;
 
   & button {
     transition: 0.3s;
@@ -56,6 +73,15 @@ const Wrap = styled.div`
   & > .select {
     transform: rotateZ(135deg);
   }
+
+  ${({ isLoad }) =>
+    !isLoad
+      ? css`
+          opacity: 0;
+        `
+      : css`
+          opacity: 1;
+        `}
 `;
 
 const AlbumArt = styled.img`

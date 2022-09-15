@@ -2,7 +2,7 @@ import { MailBox3D } from "@asset/symbols";
 import { OpacityAnimationCont } from "@styles/block";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { RegisterCont } from "./styles";
+import { MailBoxWrap, RegisterCont } from "./styles";
 
 export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -39,18 +39,20 @@ export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
   return (
     <OpacityAnimationCont animationEnd={opacityAnimationEnd}>
       <RegisterCont>
-        <MailBox3D
-          rotate={rotate}
-          topAnchor={topAnchor}
-          open={open}
-          button={{
-            buttons: [{ title: "등록하기", clickAction: registerAction }],
-          }}
-          content={content}
-          setContentView={setContentView}
-        >
-          {children}
-        </MailBox3D>
+        <MailBoxWrap>
+          <MailBox3D
+            rotate={rotate}
+            topAnchor={topAnchor}
+            open={open}
+            button={{
+              buttons: [{ title: "등록하기", clickAction: registerAction }],
+            }}
+            content={content}
+            setContentView={setContentView}
+          >
+            {children}
+          </MailBox3D>
+        </MailBoxWrap>
       </RegisterCont>
     </OpacityAnimationCont>
   );

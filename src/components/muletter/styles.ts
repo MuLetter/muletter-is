@@ -104,7 +104,7 @@ export const AlbumArt = styled.img`
 export const TitleWrap = styled.div`
   color: ${black[700]};
 
-  width: 360px;
+  width: 312px;
 
   & > * {
     white-space: nowrap;
@@ -114,7 +114,10 @@ export const TitleWrap = styled.div`
 `;
 
 export const IconGroup = styled.div`
-  width: 48px;
+  display: flex;
+  justify-content: flex-end;
+
+  width: 96px;
 
   & button {
     color: ${black[500]};

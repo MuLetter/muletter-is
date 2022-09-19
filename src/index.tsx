@@ -6,6 +6,7 @@ import GlobalStyle from "@styles/global";
 import { RecoilRoot } from "recoil";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Audio from "@component/common/audio";
 
 const client = new QueryClient({
   defaultOptions: {
@@ -27,6 +28,7 @@ root.render(
       <Router basename={process.env.PUBLIC_URL}>
         <App />
       </Router>
+      <Audio />
     </RecoilRoot>
   </QueryClientProvider>
 );

@@ -10,11 +10,13 @@ import {
 } from "./styles";
 import { MuLetterComponentProps } from "./types";
 import _ from "lodash";
-import { BsYoutube } from "react-icons/bs";
+import { BsYoutube, BsMusicNoteBeamed } from "react-icons/bs";
 import { IconButton } from "@component/common/button";
 import React from "react";
 import Background from "./Background";
 import { Track } from "@api/types";
+import { useSetRecoilState } from "recoil";
+import { audioTrackState } from "@store/atom";
 
 export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
   const [open, setOpen] = React.useState<boolean>(false);
@@ -24,6 +26,8 @@ export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
   const [backgroundSrc, setBackgroundSrc] = React.useState<string | null>(null);
   const [bgView, setBgView] = React.useState<boolean>(false);
   const refScreen = React.useRef<HTMLDivElement>(null);
+
+  const setAudioTrack = useSetRecoilState(audioTrackState);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -47,6 +51,13 @@ export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
   const onMouseTrack = React.useCallback((track: Track) => {
     setSelectedTrack(track);
   }, []);
+
+  const previewOn = React.useCallback(
+    (track: Track) => {
+      setAudioTrack(track);
+    },
+    [setAudioTrack]
+  );
 
   return (
     <Wrap ref={refScreen}>
@@ -88,6 +99,11 @@ export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
                     <BsYoutube />
                   </IconButton>
                 </a>
+                {track.preview_url && (
+                  <IconButton onClick={() => previewOn(track)}>
+                    <BsMusicNoteBeamed />
+                  </IconButton>
+                )}
               </IconGroup>
             </RecoItem>
           ))}

@@ -1,10 +1,15 @@
 import { MailBox3D } from "@asset/symbols";
+import { generalAlertState } from "@store/atom";
+import { selectTracksState } from "@store/mailbox/atom";
 import { OpacityAnimationCont } from "@styles/block";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { MailBoxWrap, RegisterCont } from "./styles";
 
 export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
+  const setAlert = useSetRecoilState(generalAlertState);
+  const selectedItems = useRecoilValue(selectTracksState);
   const [open, setOpen] = React.useState<boolean>(false);
   const [rotate, setRotate] = React.useState<boolean>(false);
   const [topAnchor, setTopAnchor] = React.useState<boolean>(false);
@@ -14,6 +19,13 @@ export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
   const registerAction = React.useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
+
+      if (selectedItems.length === 0) {
+        setAlert({
+          message: "음악을 등록하신 후에 진행해주세요.",
+        });
+        return;
+      }
       setContentView(false);
 
       setTimeout(() => {
@@ -28,7 +40,7 @@ export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
         }, 1000);
       }, 750);
     },
-    [navigate]
+    [navigate, selectedItems, setAlert]
   );
 
   const opacityAnimationEnd = React.useCallback(() => {

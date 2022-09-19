@@ -1,5 +1,27 @@
+import { black, white } from "@styles/color";
 import { fontStyles } from "@styles/font";
 import styled, { keyframes } from "styled-components";
+
+export const GeneralAlertWrap = styled.div`
+  position: fixed;
+
+  top: calc(50% - 21.5px);
+  left: calc(50% - 150px);
+
+  z-index: 20000;
+
+  background: ${black[500]};
+
+  color: ${white[500]};
+  width: 300px;
+
+  ${fontStyles["p2"]};
+
+  padding: 8px 24px;
+  border-radius: 12px;
+
+  text-align: center;
+`;
 
 export const AlertLidAni = keyframes`
     from {

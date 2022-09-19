@@ -1,5 +1,9 @@
+import { generalAlertState } from "@store/atom";
+import { OpacityAnimationCont } from "@styles/block";
 import { white } from "@styles/color";
-import { LetterAlertWrap } from "./styles";
+import React from "react";
+import { useRecoilValue } from "recoil";
+import { GeneralAlertWrap, LetterAlertWrap } from "./styles";
 
 export function LetterAlert() {
   return (
@@ -48,5 +52,32 @@ export function LetterAlert() {
         편지가 도착했습니다.
       </text>
     </LetterAlertWrap>
+  );
+}
+
+export function GeneralAlert() {
+  const alert = useRecoilValue(generalAlertState);
+  const [view, setView] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    let timeId: NodeJS.Timeout;
+    if (alert) {
+      setView(true);
+      timeId = setTimeout(() => {
+        setView(false);
+      }, 1000);
+    }
+
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [alert]);
+
+  return view ? (
+    <OpacityAnimationCont>
+      <GeneralAlertWrap>{alert!.message}</GeneralAlertWrap>
+    </OpacityAnimationCont>
+  ) : (
+    <></>
   );
 }

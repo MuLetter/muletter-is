@@ -16,7 +16,7 @@ export const AudioWrap = styled.div`
 
   overflow: hidden;
   cursor: pointer;
-
+  transition: 0.3s;
   & .comming-soon {
     display: none;
   }
@@ -31,14 +31,12 @@ export const AudioWrap = styled.div`
   }
 
   &.mini-ex {
-    transition: 0.3s;
     & > .title-wrap {
       transform: translateY(0);
     }
   }
 
   &.full {
-    transition: 0.3s;
     width: 400px;
     height: 600px;
     cursor: default;

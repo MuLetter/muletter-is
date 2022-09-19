@@ -2,7 +2,7 @@ import { white } from "@styles/color";
 import React from "react";
 import styled, { css } from "styled-components";
 import { Letter2DText } from "./Items2D";
-import { Back, Front, Letter, Lid } from "./Items3D";
+import { Back, Front, Letter, LetterBottomGuard, Lid } from "./Items3D";
 import { Letter2DStyleProps, MailControlProps, MailStyleProps } from "./types";
 
 export function Mail3D({
@@ -72,6 +72,7 @@ export function Mail3D({
         >
           {children}
         </Letter>
+        <LetterBottomGuard />
         <Front />
         <Lid isOpen={isOpen} animationEnd={changeLetterView} />
       </MailWrap>

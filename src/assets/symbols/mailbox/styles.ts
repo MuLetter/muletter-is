@@ -41,6 +41,20 @@ export const Content = styled.div`
   box-sizing: border-box;
 `;
 
+export const LetterBottomGuardWrap = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+
+  background: linear-gradient(
+    360deg,
+    ${white[500]} 70%,
+    rgba(255, 255, 255, 0)
+  );
+`;
+
 export const ButtonContentWrap = styled.div`
   background: transparent !important;
   width: 100%;

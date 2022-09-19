@@ -1,5 +1,6 @@
 import { black } from "@styles/color";
 import React from "react";
+import { LetterBottomGuardWrap } from "../mailbox/styles";
 import { LetterBlock, LidBlock, ShadowGuard } from "./styles";
 import {
   LetterControlProps,
@@ -51,6 +52,10 @@ export function Front() {
       </svg>
     </ShadowGuard>
   );
+}
+
+export function LetterBottomGuard() {
+  return <LetterBottomGuardWrap />;
 }
 
 export function Lid({ isOpen, animationEnd }: LidStyleProps & LidControlProps) {

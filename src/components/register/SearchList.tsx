@@ -12,23 +12,23 @@ function SearchList({
   nextPage,
   isRefetching,
   isFechingNextPage,
+  setSearchBarUnmount,
 }: SearchListProps) {
   const refWrap = React.useRef<HTMLDivElement>(null);
   const [selectTracks, setSelectTracks] = useRecoilState(selectTracksState);
+  const refSelected = React.useRef<Track[]>(selectTracks);
 
-  const selectItem = React.useCallback(
-    (track: Track) => {
-      setSelectTracks(_.concat(selectTracks, track));
-    },
-    [selectTracks, setSelectTracks]
-  );
+  const selectItem = React.useCallback((track: Track) => {
+    refSelected.current = _.concat(refSelected.current, track);
+    // setSelectTracks(_.concat(selectTracks, track));
+  }, []);
 
-  const removeItem = React.useCallback(
-    (track: Track) => {
-      setSelectTracks(_.dropWhile(selectTracks, (st) => st.id === track.id));
-    },
-    [selectTracks, setSelectTracks]
-  );
+  const removeItem = React.useCallback((track: Track) => {
+    refSelected.current = _.dropWhile(
+      refSelected.current,
+      (st) => st.id === track.id
+    );
+  }, []);
 
   const throttleScroll = React.useRef<() => void>(
     _.throttle(() => {
@@ -54,7 +54,12 @@ function SearchList({
   React.useEffect(() => {
     if (refWrap.current) refWrap.current!.addEventListener("scroll", nextFetch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    return () => {
+      setSelectTracks(refSelected.current);
+      setSearchBarUnmount(true);
+    };
+  }, [setSelectTracks, nextFetch, setSearchBarUnmount]);
 
   return (
     <Wrap ref={refWrap}>
@@ -67,7 +72,8 @@ function SearchList({
               selectAction={selectItem}
               removeAction={removeItem}
               isSelect={
-                _.find(selectTracks, (st) => st.id === track.id) !== undefined
+                _.find(refSelected.current, (st) => st.id === track.id) !==
+                undefined
               }
             />
           ))

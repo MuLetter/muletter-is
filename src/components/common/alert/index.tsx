@@ -1,5 +1,4 @@
 import { generalAlertState } from "@store/atom";
-import { OpacityAnimationCont } from "@styles/block";
 import { white } from "@styles/color";
 import React from "react";
 import { useRecoilValue } from "recoil";
@@ -65,7 +64,7 @@ export function GeneralAlert() {
       setView(true);
       timeId = setTimeout(() => {
         setView(false);
-      }, 1000);
+      }, 1500);
     }
 
     return () => {
@@ -73,11 +72,5 @@ export function GeneralAlert() {
     };
   }, [alert]);
 
-  return view ? (
-    <OpacityAnimationCont>
-      <GeneralAlertWrap>{alert!.message}</GeneralAlertWrap>
-    </OpacityAnimationCont>
-  ) : (
-    <></>
-  );
+  return view ? <GeneralAlertWrap>{alert!.message}</GeneralAlertWrap> : <></>;
 }

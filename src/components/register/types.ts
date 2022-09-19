@@ -27,6 +27,7 @@ export interface SearchListProps {
   nextPage: (options?: FetchNextPageOptions) => void;
   isRefetching?: boolean;
   isFechingNextPage?: boolean;
+  setSearchBarUnmount: (status: boolean) => void;
 }
 
 export interface SearchItemStyleProps {

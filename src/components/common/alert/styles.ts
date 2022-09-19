@@ -1,3 +1,4 @@
+import { OpacityAni } from "@styles/block";
 import { black, white } from "@styles/color";
 import { fontStyles } from "@styles/font";
 import styled, { keyframes } from "styled-components";
@@ -21,6 +22,7 @@ export const GeneralAlertWrap = styled.div`
   border-radius: 12px;
 
   text-align: center;
+  animation: ${OpacityAni} 0.5s linear forwards;
 `;
 
 export const AlertLidAni = keyframes`

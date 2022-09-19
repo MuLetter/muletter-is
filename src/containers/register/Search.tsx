@@ -9,11 +9,22 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import _ from "lodash";
 
-function Search() {
-  const [mode, setMode] = React.useState<SearchBarMode>("waiting");
-  const modeChange = React.useCallback((mode: SearchBarMode) => {
-    setMode(mode);
-  }, []);
+type Props = {
+  mode: SearchBarMode;
+  setMode: (mode: SearchBarMode) => void;
+  setSearchBarUnmount: (status: boolean) => void;
+};
+
+function Search({ mode, setMode, setSearchBarUnmount }: Props) {
+  const modeChange = React.useCallback(
+    (mode: SearchBarMode) => {
+      setMode(mode);
+      if (mode === "searching") {
+        setSearchBarUnmount(false);
+      }
+    },
+    [setMode, setSearchBarUnmount]
+  );
   const queryClient = useQueryClient();
 
   const refInput = React.useRef<HTMLInputElement>(null);
@@ -68,10 +79,12 @@ function Search() {
     if (mode === "searching") refInput.current!.focus();
 
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      queryClient.resetQueries(["searchTracks", refInput.current!.value], {
-        exact: true,
-      });
+      if (refInput.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        queryClient.resetQueries(["searchTracks", refInput.current.value], {
+          exact: true,
+        });
+      }
     };
   }, [mode, queryClient]);
 
@@ -92,6 +105,7 @@ function Search() {
           nextPage={fetchNextPage}
           isRefetching={isRefetching}
           isFechingNextPage={isFetchingNextPage}
+          setSearchBarUnmount={setSearchBarUnmount}
         />
       )}
     </>

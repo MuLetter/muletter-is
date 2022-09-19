@@ -78,9 +78,9 @@ export function LogoLoading() {
       >
         <defs>
           <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#2880D8" />
-            <stop offset="50%" stop-color="#AC73CF" />
-            <stop offset="100%" stop-color="#EE68A4" />
+            <stop offset="0%" stopColor="#2880D8" />
+            <stop offset="50%" stopColor="#AC73CF" />
+            <stop offset="100%" stopColor="#EE68A4" />
           </linearGradient>
         </defs>
         <path

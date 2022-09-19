@@ -11,21 +11,25 @@ export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
   const [content, setContentView] = React.useState<boolean>(false);
   const navigate = useNavigate();
 
-  const registerAction = React.useCallback(() => {
-    setContentView(false);
-
-    setTimeout(() => {
-      setTopAnchor(false);
-      setOpen(false);
-      setRotate(false);
+  const registerAction = React.useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      setContentView(false);
 
       setTimeout(() => {
-        navigate("/step2", {
-          replace: true,
-        });
-      }, 1000);
-    }, 750);
-  }, [navigate]);
+        setTopAnchor(false);
+        setOpen(false);
+        setRotate(false);
+
+        setTimeout(() => {
+          navigate("/step2", {
+            replace: true,
+          });
+        }, 1000);
+      }, 750);
+    },
+    [navigate]
+  );
 
   const opacityAnimationEnd = React.useCallback(() => {
     setRotate(true);
@@ -38,14 +42,19 @@ export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
 
   return (
     <OpacityAnimationCont animationEnd={opacityAnimationEnd}>
-      <RegisterCont>
+      <RegisterCont onSubmit={registerAction}>
         <MailBoxWrap>
           <MailBox3D
             rotate={rotate}
             topAnchor={topAnchor}
             open={open}
             button={{
-              buttons: [{ title: "등록하기", clickAction: registerAction }],
+              buttons: [
+                {
+                  title: "등록하기",
+                  type: "submit",
+                },
+              ],
             }}
             content={content}
             setContentView={setContentView}

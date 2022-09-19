@@ -83,11 +83,12 @@ export function BoxContent({
 export function ButtonContent({ buttons }: ButtonContentProps) {
   return (
     <ButtonContentWrap className="mailbox-content">
-      {buttons.map(({ title, clickAction }) => (
+      {buttons.map(({ title, clickAction, type }) => (
         <Button
           colorTheme="outline"
           onClick={clickAction}
           key={`button-${title}`}
+          type={type}
         >
           {title}
         </Button>

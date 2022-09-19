@@ -10,7 +10,8 @@ export interface ContentControlProps {}
 
 export interface ButtonProps {
   title: string;
-  clickAction: () => void;
+  clickAction?: (...args: any) => void;
+  type?: "button" | "submit";
 }
 
 export interface ButtonContentProps {

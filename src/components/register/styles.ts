@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const RegisterCont = styled.div`
+export const RegisterCont = styled.form`
   width: 1280px;
   margin: 60px auto;
   height: calc(100vh - 120px);

@@ -40,7 +40,7 @@ export const Content = styled.div`
   padding: 32px;
   box-sizing: border-box;
 
-  & * {
+  /* & * {
     opacity: 0;
   }
 
@@ -48,7 +48,7 @@ export const Content = styled.div`
     & * {
       opacity: 1;
     }
-  }
+  } */
 `;
 
 export const LetterBottomGuardWrap = styled.div`

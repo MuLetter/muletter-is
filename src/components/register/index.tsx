@@ -56,8 +56,12 @@ export function RegisterComponent({ children }: React.PropsWithChildren<any>) {
 
       if (mode === "searching") {
         setMode("waiting");
+        setTimeout(() => {
+          setRegist(true);
+        }, 300);
+      } else {
+        setRegist(true);
       }
-      setRegist(true);
     },
     [mode]
   );

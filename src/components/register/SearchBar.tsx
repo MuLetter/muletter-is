@@ -7,7 +7,9 @@ import { SearchBarProps } from "./types";
 
 function SearchBar({ mode, modeChange, refInput, q, setQ }: SearchBarProps) {
   return (
-    <Wrap onClick={mode === "waiting" ? () => modeChange() : undefined}>
+    <Wrap
+      onClick={mode === "waiting" ? () => modeChange("searching") : undefined}
+    >
       <Input
         ref={refInput}
         type="text"
@@ -19,7 +21,13 @@ function SearchBar({ mode, modeChange, refInput, q, setQ }: SearchBarProps) {
         // value={q}
         onChange={setQ}
       />
-      <IconButton onClick={modeChange} className={`mode-change-btn ${mode}`}>
+      <IconButton
+        type="button"
+        onClick={() => {
+          modeChange(mode === "waiting" ? "searching" : "waiting");
+        }}
+        className={`mode-change-btn ${mode}`}
+      >
         <MdAdd />
       </IconButton>
     </Wrap>

@@ -16,7 +16,7 @@ export interface SearchItemProps extends SelectItemProps {
 
 export interface SearchBarProps {
   mode: "waiting" | "searching";
-  modeChange: () => void;
+  modeChange: (mode: SearchBarMode) => void;
   refInput: React.Ref<HTMLInputElement>;
   q: string;
   setQ: (e: React.ChangeEvent<HTMLInputElement>) => void;

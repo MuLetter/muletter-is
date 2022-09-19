@@ -11,8 +11,8 @@ import _ from "lodash";
 
 function Search() {
   const [mode, setMode] = React.useState<SearchBarMode>("waiting");
-  const modeChange = React.useCallback(() => {
-    setMode((prev) => (prev === "waiting" ? "searching" : "waiting"));
+  const modeChange = React.useCallback((mode: SearchBarMode) => {
+    setMode(mode);
   }, []);
   const refInput = React.useRef<HTMLInputElement>(null);
   const [q, setQ] = React.useState<string>("");

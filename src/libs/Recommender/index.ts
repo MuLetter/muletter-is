@@ -23,7 +23,7 @@ class Recommender {
   recoIdsAndLabels?: (string | number | undefined)[][];
   recoTracks: Track[];
 
-  MIN_LENGTH: number = 80;
+  MIN_LENGTH: number = 50;
   MAX_LENGTH: number = 100;
 
   constructor(spotifyToken: string, tracks: Track[]) {

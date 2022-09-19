@@ -4,6 +4,7 @@ import { tokenState } from "@store/atom";
 import { selectTracksState } from "@store/mailbox/atom";
 import { RecommenderState } from "@store/reco/atom";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 export function ReadyContainer() {
@@ -11,6 +12,11 @@ export function ReadyContainer() {
 
   const token = useRecoilValue(tokenState);
   const selectedTracks = useRecoilValue(selectTracksState);
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (selectedTracks.length === 0) navigate("/");
+  }, [selectedTracks, navigate]);
 
   const setting = React.useCallback(async () => {
     const builder = new RecommenderBuilder(token!, selectedTracks);

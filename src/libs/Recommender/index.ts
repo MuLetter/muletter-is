@@ -48,7 +48,9 @@ class Recommender {
   }
 
   next() {
-    this.run();
+    const result = this.run();
+    if (!result) return { value: this.recoTracks.length, done: true };
+
     if (
       this.recoTracks.length <= this.MAX_LENGTH &&
       this.recoTracks.length >= this.MIN_LENGTH
@@ -278,6 +280,8 @@ class Recommender {
     );
     console.log("recoIds", recoIds);
 
+    if (!recoIds) return [];
+
     let recoTracks = _.filter(this.recommendations, ({ id }) =>
       recoIds.includes(id)
     );
@@ -300,6 +304,7 @@ class Recommender {
   run = () => {
     this.runKMeans();
     let recoTracks = this.labelParsing();
+    if (recoTracks.length === 0) return false;
 
     // 수량 조정 - 제거
     let recoIdsAndLabels = this.getRecoIdsAndLabels();
@@ -315,6 +320,7 @@ class Recommender {
 
     // 수량 조정 - 제거
     this.save(recoTracks);
+    return true;
   };
 }
 

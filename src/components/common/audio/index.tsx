@@ -20,14 +20,18 @@ function Audio() {
   const [mode, setMode] = React.useState<AudioMode>("mini");
 
   React.useEffect(() => {
-    setStatus(true);
+    if (audioTrack) {
+      setStatus(true);
+    }
   }, [audioTrack]);
 
   React.useEffect(() => {
-    refAudio.current!.addEventListener("ended", () => {
-      setStatus(false);
-    });
-  });
+    if (refAudio.current) {
+      refAudio.current!.addEventListener("ended", () => {
+        setStatus(false);
+      });
+    }
+  }, [audioTrack]);
 
   const changeStatus = React.useCallback(
     (e: React.MouseEvent, status: boolean) => {
@@ -55,13 +59,10 @@ function Audio() {
   return audioTrack ? (
     <AudioWrap
       className={mode}
-      onClick={
-        mode === "mini"
-          ? (e) => changeMode(e, "mini-ex")
-          : mode === "mini-ex"
-          ? (e) => changeMode(e, "mini")
-          : undefined
+      onMouseEnter={
+        mode !== "full" ? (e) => changeMode(e, "mini-ex") : undefined
       }
+      onMouseLeave={mode !== "full" ? (e) => changeMode(e, "mini") : undefined}
     >
       <AlbumArt src={audioTrack.album.images[0].url} alt="album-art" />
       <TitleWrap className="title-wrap">

@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/muletter-is/static/js/main.dbb6b71f.js",
+    "main.js": "/muletter-is/static/js/main.fed54c11.js",
     "static/js/787.fd6ef238.chunk.js": "/muletter-is/static/js/787.fd6ef238.chunk.js",
     "index.html": "/muletter-is/index.html",
-    "main.dbb6b71f.js.map": "/muletter-is/static/js/main.dbb6b71f.js.map",
+    "main.fed54c11.js.map": "/muletter-is/static/js/main.fed54c11.js.map",
     "787.fd6ef238.chunk.js.map": "/muletter-is/static/js/787.fd6ef238.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.dbb6b71f.js"
+    "static/js/main.fed54c11.js"
   ]
 }

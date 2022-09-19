@@ -8,27 +8,55 @@ import { Letter2DStyleProps, MailControlProps, MailStyleProps } from "./types";
 export function Mail3D({
   children,
   isOpen,
+  refScreen,
 }: React.PropsWithChildren<MailControlProps>) {
   const refWrap = React.useRef<HTMLDivElement>(null);
   const [down, setDown] = React.useState<boolean>(false);
   const [rotate] = React.useState<boolean>(false);
   const [letterView, setLetterView] = React.useState<boolean>(false);
+  const refLetter = React.useRef<HTMLDivElement>(null);
 
-  // open 액션용
-  const changeLetterView = React.useCallback((state: boolean) => {
-    setLetterView(state);
+  const resizing = React.useCallback(() => {
     if (refWrap.current) {
       const { top } = refWrap.current.getBoundingClientRect();
 
-      if (top < 320) setDown(true);
+      if (top - 400 < 160) setDown(true);
       else setDown(false);
     }
   }, []);
+
+  React.useEffect(() => {
+    return () => {
+      window.removeEventListener("resize", resizing);
+    };
+  }, [resizing]);
+
+  // open 액션용
+  const changeLetterView = React.useCallback(
+    (state: boolean) => {
+      setLetterView(state);
+      if (refWrap.current) {
+        const { top } = refWrap.current.getBoundingClientRect();
+
+        if (top - 400 < 160) setDown(true);
+        else setDown(false);
+
+        window.addEventListener("resize", resizing);
+      }
+    },
+    [resizing]
+  );
 
   // close action 용
   const changeLid = React.useCallback((state: boolean) => {
     // setOpen(state);
   }, []);
+
+  React.useEffect(() => {
+    refScreen.current!.addEventListener("wheel", (e) => {
+      refLetter.current!.scrollTop += e.deltaY;
+    });
+  }, [refScreen]);
 
   return (
     <Mail ref={refWrap} className={`${down ? "down" : ""}`}>
@@ -37,7 +65,11 @@ export function Mail3D({
         // onClick={letterView ? () => setLetterView(false) : () => setOpen(true)}
       >
         <Back />
-        <Letter isView={letterView} animationEnd={changeLid}>
+        <Letter
+          isView={letterView}
+          animationEnd={changeLid}
+          refLetter={refLetter}
+        >
           {children}
         </Letter>
         <Front />
@@ -53,7 +85,7 @@ const Mail = styled.div`
 
   transition: 0.8s;
   &.down {
-    transform: translateY(320px);
+    transform: translateY(160px);
   }
 `;
 

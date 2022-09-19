@@ -23,6 +23,7 @@ export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
   );
   const [backgroundSrc, setBackgroundSrc] = React.useState<string | null>(null);
   const [bgView, setBgView] = React.useState<boolean>(false);
+  const refScreen = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -48,9 +49,9 @@ export function MuLetterComponent({ recoTracks }: MuLetterComponentProps) {
   }, []);
 
   return (
-    <Wrap>
+    <Wrap ref={refScreen}>
       {bgView && <Background imgSrc={backgroundSrc} />}
-      <Mail3D isOpen={open}>
+      <Mail3D isOpen={open} refScreen={refScreen}>
         <RecoListWrap>
           {recoTracks?.map((track) => (
             <RecoItem

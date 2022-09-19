@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface LidStyleProps {
   isOpen: boolean;
 }
@@ -12,6 +14,7 @@ export interface LetterStyleProps {
 
 export interface LetterControlProps {
   animationEnd: (isView: boolean) => void;
+  refLetter: React.RefObject<HTMLDivElement>;
 }
 
 export interface MailStyleProps {
@@ -24,4 +27,5 @@ export interface Letter2DStyleProps {
 
 export interface MailControlProps {
   isOpen: boolean;
+  refScreen: React.RefObject<HTMLDivElement>;
 }

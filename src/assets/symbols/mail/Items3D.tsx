@@ -99,9 +99,8 @@ export function Letter({
   isView,
   animationEnd,
   children,
+  refLetter,
 }: React.PropsWithChildren<LetterStyleProps & LetterControlProps>) {
-  const refLetter = React.useRef<HTMLDivElement>(null);
-
   React.useEffect(() => {
     if (refLetter.current) {
       refLetter.current.addEventListener("transitionend", (e) => {
@@ -112,7 +111,7 @@ export function Letter({
         }
       });
     }
-  }, [animationEnd]);
+  }, [animationEnd, refLetter]);
 
   return (
     <LetterBlock

@@ -13,35 +13,37 @@ function SearchItem({
   removeAction,
   isSelect,
 }: SearchItemProps) {
-  const [select, setSelect] = React.useState<boolean>(isSelect);
   const [isLoad, setIsLoad] = React.useState<boolean>(false);
   const refAlbumArt = React.useRef<HTMLImageElement>(null);
 
   React.useEffect(() => {
     if (refAlbumArt.current) {
-      refAlbumArt.current.addEventListener("load", () => {
+      setIsLoad(refAlbumArt.current.complete);
+      refAlbumArt.current.addEventListener("load", (e) => {
         setIsLoad(refAlbumArt.current!.complete);
       });
     }
   }, []);
 
-  const _selectAction = React.useCallback(() => {
-    selectAction!(track);
-    setSelect(true);
-  }, [selectAction, track]);
+  // const _selectAction = React.useCallback(() => {
+  //   selectAction!(track);
+  //   setSelect(true);
+  // }, [selectAction, track]);
 
-  const _removeAction = React.useCallback(() => {
-    if (removeAction) {
-      removeAction(track);
-      setSelect(false);
-    }
-  }, [removeAction, track]);
+  // const _removeAction = React.useCallback(() => {
+  //   if (removeAction) {
+  //     removeAction(track);
+  //     setSelect(false);
+  //   }
+  // }, [removeAction, track]);
 
   return (
     <Wrap
       loadDuration={Math.random() * (0.4 - 0.2) + 0.2}
       isLoad={isLoad}
-      onClick={select ? _removeAction : _selectAction}
+      onClick={
+        isSelect ? () => removeAction(track) : () => selectAction!(track)
+      }
     >
       <AlbumArt
         ref={refAlbumArt}

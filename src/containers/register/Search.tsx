@@ -68,7 +68,10 @@ function Search() {
     if (mode === "searching") refInput.current!.focus();
 
     return () => {
-      queryClient.resetQueries(["searchTracks"], { exact: true });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      queryClient.resetQueries(["searchTracks", refInput.current!.value], {
+        exact: true,
+      });
     };
   }, [mode, queryClient]);
 

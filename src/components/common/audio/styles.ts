@@ -1,4 +1,4 @@
-import { white } from "@styles/color";
+import { black, white } from "@styles/color";
 import styled from "styled-components";
 
 export const AudioWrap = styled.div`
@@ -15,6 +15,44 @@ export const AudioWrap = styled.div`
   background: black;
 
   overflow: hidden;
+  cursor: pointer;
+
+  & .comming-soon {
+    display: none;
+  }
+
+  &.mini {
+    & > .title-wrap {
+      transform: translateY(120px);
+      & > .icon-wrap {
+        display: none;
+      }
+    }
+  }
+
+  &.mini-ex {
+    transition: 0.3s;
+    & > .title-wrap {
+      transform: translateY(0);
+    }
+  }
+
+  &.full {
+    transition: 0.3s;
+    width: 400px;
+    height: 600px;
+    cursor: default;
+
+    & > .title-wrap {
+      & > .icon-wrap {
+        border-bottom: 2px solid ${white[600]};
+      }
+    }
+
+    & .comming-soon {
+      display: block;
+    }
+  }
 `;
 
 export const AlbumArt = styled.img`
@@ -35,20 +73,22 @@ export const TitleWrap = styled.div`
   bottom: 0;
 
   width: 100%;
-  height: 40%;
+  height: 100%;
 
-  background: rgba(51, 51, 51, 0.2);
-  backdrop-filter: blur(10px);
+  background: ${black[700]};
+  /* backdrop-filter: blur(10px); */
 
   color: ${white[500]};
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
-  padding: 0 12px;
+  padding: 20px 12px 0;
   box-sizing: border-box;
+
+  transition: 0.3s;
 
   & > .artists-names,
   .track-title {
@@ -58,4 +98,19 @@ export const TitleWrap = styled.div`
     text-overflow: ellipsis;
     text-align: center;
   }
+`;
+
+export const IconWrap = styled.div`
+  width: 100%;
+  margin: 8px 0 0;
+`;
+
+export const IconGroup = styled.div`
+  width: 100%;
+  padding: 0 0 6px;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
 `;

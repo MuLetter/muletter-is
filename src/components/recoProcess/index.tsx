@@ -19,7 +19,10 @@ export function RecoProcessComponent({ processDatas, isDone }: ComponentProps) {
     <OpacityAnimationCont>
       <AlertWrap>
         <LetterAlert />
-        <Button colorTheme="outline" onClick={() => navigate("/step4")}>
+        <Button
+          colorTheme="outline"
+          onClick={() => navigate("/step4", { replace: true })}
+        >
           확인하기
         </Button>
       </AlertWrap>

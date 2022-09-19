@@ -75,7 +75,9 @@ export function BoxContent({
           fill={white[900]}
         />
       </ContentTail>
-      <Content className="mailbox-content">{children}</Content>
+      <Content className={`mailbox-content ${isView ? "view" : ""}`}>
+        {children}
+      </Content>
     </ContentWrap>
   );
 }

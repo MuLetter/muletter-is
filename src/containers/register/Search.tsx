@@ -4,7 +4,7 @@ import SearchList from "@component/register/SearchList";
 import SelectList from "@component/register/SelectList";
 import { SearchBarMode } from "@component/types";
 import { tokenState } from "@store/atom";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import _ from "lodash";
@@ -14,6 +14,8 @@ function Search() {
   const modeChange = React.useCallback((mode: SearchBarMode) => {
     setMode(mode);
   }, []);
+  const queryClient = useQueryClient();
+
   const refInput = React.useRef<HTMLInputElement>(null);
   const [q, setQ] = React.useState<string>("");
   const token = useRecoilValue(tokenState);
@@ -51,8 +53,12 @@ function Search() {
   const onChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       debounceSearch.current(e);
+
+      return () => {
+        queryClient.resetQueries(["searchTracks"], { exact: true });
+      };
     },
-    []
+    [queryClient]
   );
 
   React.useEffect(() => {
@@ -60,7 +66,11 @@ function Search() {
 
     refInput.current!.value = "";
     if (mode === "searching") refInput.current!.focus();
-  }, [mode]);
+
+    return () => {
+      queryClient.resetQueries(["searchTracks"], { exact: true });
+    };
+  }, [mode, queryClient]);
 
   return (
     <>

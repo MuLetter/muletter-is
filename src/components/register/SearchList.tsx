@@ -52,6 +52,7 @@ function SearchList({
   }, []);
 
   React.useEffect(() => {
+    refWrap.current!.scrollTop = 0;
     if (refWrap.current) refWrap.current!.addEventListener("scroll", nextFetch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
